@@ -1,6 +1,4 @@
-#!/usr/bin/python
-# (C) 2017 Gunnar Andersson
-# SPDX-License-Identifier: MPL-2.0
+#!/usr/bin/python3
 
 import sys, os
 sys.path.append(os.getcwd() + "/../pyfranca_cpp")
