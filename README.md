@@ -19,6 +19,21 @@ submodule, but might be.  It's supposed to be reusable.
 - Install clang-format or the code generation will fail
 - Also read the [pyfranca_cpp/README.md](https://github.com/gunnarx/pyfrancagen/blob/master/pyfranca_cpp/README.md)
 
+```bash
+git clone https://github.com/gunnarx/pyfrancagen.git
+cd pyfrancagen/
+git submodule update --init
+
+sudo apt-get install python3-pip
+sudo apt-get install clang-format
+
+pip3 install setuptools
+pip3 install markupsafe==2.0.1
+pip3 install ply
+
+jinja: git checkout 2.10.x
+```
+
 # Try:
 
 First ensure submodules are brought in:
