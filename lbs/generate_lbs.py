@@ -10,24 +10,7 @@ from pyfranca_cpp import *
 LOCALINPUTDIR = '../lbs/fidl'
 
 FIDL_FILES =  [ '%s/%s' % (LOCALINPUTDIR,s) for s in [
-    'navigation/poiservice/POIServiceTypes.fidl',
-    'navigation/poiservice/POIContentAccessModule.fidl',
-    'navigation/poiservice/POIConfiguration.fidl',
-    'navigation/poiservice/POISearch.fidl',
-    'navigation/poiservice/POIContentAccess.fidl',
-    'navigation/navigationcore/NavigationCoreTypes.fidl',
-    'navigation/navigationcore/Guidance.fidl',
-    'navigation/navigationcore/Configuration.fidl',
-    'navigation/navigationcore/MapMatchedPosition.fidl',
-    'navigation/navigationcore/Routing.fidl',
-    'navigation/navigationcore/LocationInput.fidl',
-    'navigation/navigationcore/Session.fidl',
-    'navigation/mapviewer/Configuration.fidl',
-    'navigation/mapviewer/MapViewerControl.fidl',
-    'navigation/mapviewer/Session.fidl', 'navigation/NavigationTypes.fidl',
-    'navigation/freetextsearchservice/FreeTextSearch.fidl',
-    'hmi/speechservice/SpeechOutput.fidl',
-    'CommonTypes.fidl' ] ]
+    'avb_audio.fidl' ] ]
 
 def main():
     for f in FIDL_FILES:
