@@ -1,0 +1,176 @@
+package org.bosch.xc.civic.avb_c.audio
+
+<** @description: Audio interface is used to activate and deactivate AVB audio streams on the AVB controller
+**>
+
+interface audio {
+	version { major 0 minor 1 }
+
+	<** @description: FID=0x20; register client and check version info. **>
+	method register {
+		in {
+			<** @description: major version of client interface implementation **>
+			UInt8 majorClientVersion
+			<** @description: minor version of client interface implementation **>
+			UInt8 minorClientVersion
+		}
+		out {
+			<** @description: major version of server interface implementation **>
+			UInt8 majorServerVersion
+			<** @description: minor version of server interface implementation **>
+			UInt8 minorServerVersion
+		}
+		error GenericCommandErrors
+	}
+
+	<** @description: FID=0x22; deregister client **>
+	method deregister {
+		error GenericCommandErrors
+	}
+
+	<** @description: FID=0x30; activate or deactivate a AVB stream **>
+	method setStreamState {
+		in {
+			<** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
+			StreamId id
+			Operation op
+		}
+		error GenericCommandErrors
+	}
+
+	<** @description: FID=0x32; get streaming state for a AVB stream **>
+	method getStreamState {
+		in {
+			<** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
+			StreamId id
+		}
+		out {
+			State st
+		}
+		error GenericCommandErrors
+	}
+
+	<** @description: FID=0x34; get a list of all available streams and their state **>
+	method getListOfStreams {
+		out {
+			Stream[] list
+		}
+	}
+
+	<** @description: FID=0x36; set event field for a given AVB stream, should only return once first AVB frame with updated EventField is sent **>
+	method setEventField {
+		in {
+			StreamId id
+			EventField field
+		}
+		error GenericCommandErrors
+	}
+
+	<** @description: FID=0x38; get event field for a given AVB stream **>
+	method getEventField {
+		in {
+			StreamId id
+		}
+		out {
+			EventField field
+		}
+		error GenericCommandErrors
+	}
+
+
+	<** @description: FID=0x25; generic error message **>
+	broadcast errorOccured {
+		out {
+			BroadcastErrors err
+			String errorDesciption
+		}
+	}
+
+	<** @description: FID=0x27; command error message **>
+	broadcast commandErrorOccured {
+		out {
+			UInt8 fid
+			UInt16 act
+			BroadcastErrors err
+			String errorDesciption
+		}
+	}
+
+	enumeration FID {
+	    <** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
+        FID_REGISTER = 32
+        FID_DEREGISTER = 34
+        FID_SETSTREAMSTATE = 36
+        FID_GETSTREAMSTATE = 38
+        FID_GETLISTOFSTREAMS = 40
+        FID_SETEVENTFIELD = 42
+        FID_GETEVENTFIELD = 44
+        FID_ERROROCCURED = 17
+        FID_COMMANDERROROCCURED = 19
+	}
+
+	<** @description: Startup failure enum **>
+	enumeration GenericErrors {
+		<** @description: Generic Error **>
+		FAILURE_GENERIC_ERROR
+		<** @description: Provided Stream ID is not known **>
+		FAILURE_UNKOWN_STREAM_ID
+	}
+
+	<** @description: errors reported as broadcasts to the client, to be extended by AVB controller software supplier for possible error codes **>
+	enumeration BroadcastErrors extends GenericErrors {
+		<** @description: CRF stream is not received by avb controller **>
+		FAILURE_CRF_STREAM_NOT_AVAILABLE
+	}
+
+	<** @description: command response errors **>
+	enumeration GenericCommandErrors {
+		<** @description: No Error **>
+		ERR_NO_ERROR
+		<** @description: Server rejected the version of the client. **>
+		ERR_VERSION_MISMATCH
+		<** @description: FID is not known to the server. **>
+		ERR_UNKNOWN_FID
+		<** @description: A parameter value is not known. **>
+		ERR_UNKNOWN_PARAMETER
+		<** @description: Payload of FID does not match expectation. **>
+		ERR_UNDEFINED_PAYLOAD
+		<** @description: FID known but cannot be processed. Precondition not matching. **>
+		ERR_SEQUENCE_ERROR
+	}
+
+	<** @description: operational state enum **>
+	enumeration Operation {
+		OP_START
+		OP_STOP
+	}
+
+	<** @description: Startup failure enum **>
+	enumeration State {
+		ST_PLAYING
+		ST_STOPPED
+		ST_FAILURE
+	}
+
+	// mapping is specified in https://wiki.swf.daimler.com/display/apricotbsc/i3+Sample+Documentation?preview=/176129287/175902397/Audio_and_AVB-Gen20xi2-Star-MMA.xlsx
+	enumeration EventField {
+		EF_STATIC = 0
+		EF_STEREO = 2
+		EF_MULTICHANNEL_5_1 = 3
+		EF_MULTICHANNEL_7_1 = 4
+		EF_MULTICHANNEL_7_1_4 = 5
+	}
+
+	enumeration StreamId {
+	    <** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
+		CIVIC_ENTERTAINMENT_STREAM = 0x0008
+		CIVIC_INFOTAINMENT_STREAM = 0x0009
+		CIVIC_IC_STREAM = 0x000A
+		CIVIC_LOWLATENCY_STREAM = 0x000B
+	}
+
+	struct Stream {
+		StreamId id
+		State st
+	}
+}
