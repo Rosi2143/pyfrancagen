@@ -100,13 +100,13 @@ interface audio {
 	    <** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
         FID_REGISTER = 32
         FID_DEREGISTER = 34
-        FID_SETSTREAMSTATE = 36
-        FID_GETSTREAMSTATE = 38
-        FID_GETLISTOFSTREAMS = 40
-        FID_SETEVENTFIELD = 42
-        FID_GETEVENTFIELD = 44
-        FID_ERROROCCURED = 17
-        FID_COMMANDERROROCCURED = 19
+        FID_SETSTREAMSTATE = 48
+        FID_GETSTREAMSTATE = 50
+        FID_GETLISTOFSTREAMS = 52
+        FID_SETEVENTFIELD = 54
+        FID_GETEVENTFIELD = 56
+        FID_ERROROCCURED = 37
+        FID_COMMANDERROROCCURED = 39
 	}
 
 	<** @description: Startup failure enum **>
@@ -163,10 +163,10 @@ interface audio {
 
 	enumeration StreamId {
 	    <** @description: last two bytes of avtp stream id (upper six bytes are MAC address of sending device) **>
-		CIVIC_ENTERTAINMENT_STREAM = 0x0008
-		CIVIC_INFOTAINMENT_STREAM = 0x0009
-		CIVIC_IC_STREAM = 0x000A
-		CIVIC_LOWLATENCY_STREAM = 0x000B
+		CIVIC_ENTERTAINMENT_STREAM = 08
+		CIVIC_INFOTAINMENT_STREAM = 09
+		CIVIC_IC_STREAM = 10
+		CIVIC_LOWLATENCY_STREAM = 11
 	}
 
 	struct Stream {
