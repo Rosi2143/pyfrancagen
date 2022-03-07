@@ -7,5 +7,7 @@
       "unordered_map": "cpp",
       "vector": "cpp",
       "stdexcept": "cpp"
-   }
+   },
+   "esbonio.server.enabled": true,
+   "cmake.sourceDirectory": "${workspaceFolder}/build"
 }
