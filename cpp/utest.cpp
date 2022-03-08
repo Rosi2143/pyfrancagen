@@ -38,7 +38,18 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
   EXPECT_EQ(MinorVersion, stream[first_msg_index + 1]);
 }
 
-TEST_F(AudioTest, CreateRegisterCommand_deserialize_OK) {
+TEST_F(AudioTest, CreateRegisterCommand_getFid_OK) {
+  audio aud_command;
+  uint8_t MajorVersion = 1;
+  uint8_t MinorVersion = 2;
+  uint16_t act = 0x1234;
+  uint8_t length = 2;
+  aud_command.register_command_serialize(act, MajorVersion, MinorVersion,
+                                         stream);
+  EXPECT_EQ((uint8_t)FID::FID_REGISTER, aud_command.getFid(stream));
+}
+
+TEST_F(AudioTest, DeserializeRegisterCommand_deserialize_OK) {
   audio aud_command_send;
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
