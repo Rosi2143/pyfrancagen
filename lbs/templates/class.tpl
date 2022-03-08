@@ -25,15 +25,19 @@ void {{ name }}::{{m.name}}_command_serialize (
                            , buffer &message_buffer
                        )
 {
-   /* Method body for {{ m.name }} here */
+  /* Method body for {{ m.name }} here */
   UInt8 fid = (UInt8)FID::FID_{{ m.name|upper }};
   serializer container;
   container.push_back(fid);
   container.push_back(act);
 
-   {%- for p in m.in_args.values() -%}
-      container.push_back({{ p.name }});
-   {% endfor %}
+  UInt8 messageLength = 0{%- for p in m.in_args.values() -%}
+    + sizeof({{ render_type(p) }}){% endfor %};
+  container.push_back(messageLength);
+
+  {%- for p in m.in_args.values() -%}
+    container.push_back({{ p.name }});
+  {% endfor %}
 
    message_buffer = container.dump_container();
 };
@@ -55,9 +59,16 @@ bool {{ name }}::{{m.name}}_command_deserialize (
   }
   act = container.pop_front(act);
 
+  UInt8 messageLength_expected = 0{%- for p in m.in_args.values() -%}
+   + sizeof({{ render_type(p) }}){% endfor %};
+  UInt8 messageLength_received = container.pop_front(messageLength_received);
+  if (messageLength_expected != messageLength_received){
+     return false;
+  }
+
   {%- for p in m.in_args.values() -%}
      {{ p.name }} = container.pop_front({{ p.name }});
-  {% endfor %}
+  {% endfor %};
 
   return true;
 };
@@ -71,17 +82,21 @@ void {{ name }}::{{m.name}}_response_serialize (
                            , buffer &message_buffer
                        )
 {
-   /* Method body for {{ m.name }} here */
+  /* Method body for {{ m.name }} here */
   UInt8 fid = (UInt8)FID::FID_{{ m.name|upper }} + 1;
   serializer container;
   container.push_back(fid);
   container.push_back(act);
 
-   {%- for p in m.out_args.values() -%}
-      container.push_back({{ p.name }});
-   {% endfor %}
+  UInt8 messageLength = 0{%- for p in m.out_args.values() -%}
+    + sizeof({{ render_type(p) }}){% endfor %};
+  container.push_back(messageLength);
 
-   message_buffer = container.dump_container();
+  {%- for p in m.out_args.values() -%}
+    container.push_back({{ p.name }});
+  {% endfor %}
+
+  message_buffer = container.dump_container();
 };
 
 {% set maybecomma = joiner(",") %}
@@ -92,7 +107,7 @@ bool {{ name }}::{{m.name}}_response_deserialize (
                               {{ maybecomma() }} {{ render_type(p) }}& {{ p.name }}{% endfor %}
                        )
 {
-   /* Method body for {{ m.name }} here */
+  /* Method body for {{ m.name }} here */
   UInt8 fid = 0;
   serializer container(message_buffer);
   fid = container.pop_front(fid);
@@ -100,6 +115,13 @@ bool {{ name }}::{{m.name}}_response_deserialize (
      return false;
   }
   act = container.pop_front(act);
+
+  UInt8 messageLength_expected = 0{%- for p in m.out_args.values() -%}
+   + sizeof({{ render_type(p) }}){% endfor %};
+  UInt8 messageLength_received = container.pop_front(messageLength_received);
+  if (messageLength_expected != messageLength_received){
+     return false;
+  }
 
   {%- for p in m.out_args.values() -%}
      {{ p.name }} = container.pop_front({{ p.name }});

@@ -19,7 +19,8 @@ class AudioTest : public ::testing::Test {
   std::vector<uint8_t> stream;
   const uint8_t fid_index = 0;
   const uint8_t act_index = 1;
-  const uint8_t first_msg_index = 3;
+  const uint8_t len_index = 3;
+  const uint8_t first_msg_index = 4;
 };
 
 TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
@@ -27,10 +28,12 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
   uint16_t act = 0x1234;
+  uint8_t length = 2;
   aud_command_send.register_command_serialize(act, MajorVersion, MinorVersion,
                                               stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, stream[fid_index]);
   EXPECT_EQ(act, convertTo16(act_index));
+  EXPECT_EQ(length, stream[len_index]);
   EXPECT_EQ(MajorVersion, stream[first_msg_index]);
   EXPECT_EQ(MinorVersion, stream[first_msg_index + 1]);
 }
@@ -43,15 +46,15 @@ TEST_F(AudioTest, CreateRegisterCommand_deserialize_OK) {
   aud_command_send.register_command_serialize(act, MajorVersion, MinorVersion,
                                               stream);
 
-  uint8_t MajorVersion_2 = 0;
-  uint8_t MinorVersion_2 = 0;
-  uint16_t act_2 = 0;
-  aud_command_send.register_command_deserialize(stream, act_2, MajorVersion_2,
-                                                MinorVersion_2);
+  uint8_t MajorVersion_r = 0;
+  uint8_t MinorVersion_r = 0;
+  uint16_t act_r = 0;
+  aud_command_send.register_command_deserialize(stream, act_r, MajorVersion_r,
+                                                MinorVersion_r);
 
-  EXPECT_EQ(act, act_2);
-  EXPECT_EQ(MajorVersion, MajorVersion_2);
-  EXPECT_EQ(MinorVersion, MinorVersion_2);
+  EXPECT_EQ(act, act_r);
+  EXPECT_EQ(MajorVersion, MajorVersion_r);
+  EXPECT_EQ(MinorVersion, MinorVersion_r);
 }
 
 int main(int argc, char* argv[]) {
