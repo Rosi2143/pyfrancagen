@@ -7,15 +7,13 @@ docker_image=
 version=1.0
 dry_run=false
 verbose=false
-buildCommand="python3"
+buildCommand="python3 ./generate_lbs.py"
 do_check=false
 do_build=false
 mappedWorkDirectory="/home/ubuntu/work"
 uid=`id -u`
 gid=`id -g`
 timezone=`cat /etc/timezone`
-
-#cache_options="$cache_options -v ${HOME}/.gradle:/home/ubuntu/.gradle"
 
 # helper function to remove a docker if not rm by docker parameter
 function removeDockerContainer () {
@@ -86,7 +84,7 @@ command="docker run ${name} ${rm} --user ${uid}:${gid} --privileged ${interactiv
    -e API_KEY=${API_KEY} \
    ${sshDockerOptions} \
    ${docker_image_url} \
-   /bin/bash -l -c \"cd ${mappedWorkDirectory} && export GRADLE_USER_HOME=/home/ubuntu/work/.gradle && $buildCommand $thinned_out_parameters\""
+   /bin/bash -l -c \"cd ${mappedWorkDirectory}/lbs && $buildCommand $thinned_out_parameters\""
 #echo ${timezone} > /etc/timezone &&
 
 if [ $verbose == true ]; then
@@ -105,7 +103,9 @@ if [ $verbose == true ]; then
    echo "command:                 " $command
 fi
 
-echo "Running in docker image ${docker_image_url}"
+if [ do_check <> true ]; then
+   echo "Running in docker image ${docker_image_url}"
+fi
 
 if [ $do_check == true ]; then
    set +e
