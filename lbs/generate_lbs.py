@@ -4,6 +4,7 @@
 
 import sys, os
 sys.path.append(os.getcwd() + "/../pyfranca_cpp")
+sys.path.append(os.getcwd() + "/pyfranca_cpp")
 
 from pyfranca_cpp import *
 
