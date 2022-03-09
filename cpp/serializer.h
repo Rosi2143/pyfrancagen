@@ -14,13 +14,18 @@ class serializer {
   buffer dump_container();
   void clear();
 
+  uint16_t push_back(const std::string& obj);
+  uint16_t push_back(const std::vector<uint8_t>& obj);
   template <typename T>
-  void push_back(const T& obj) {
+  uint16_t push_back(const T& obj) {
     serialize(obj);
+    return sizeof(obj);
   }
 
+  std::string pop_front(const std::string& obj, const uint8_t& length, uint16_t& parameterLength);
+  std::vector<uint8_t> pop_front(const std::vector<uint8_t>& obj, uint16_t& parameterLength);
   template <typename T>
-  T pop_front(const T& obj) {
+  T pop_front(const T& obj, uint16_t& parameterLength) {
     T ret = (T)0;
     try {
       ret = deserialize<T>();
@@ -31,6 +36,7 @@ class serializer {
       //  std::exception
       throw;  // rethrows the exception object of type std::length_error
     }
+    parameterLength = object_size(obj);
     return ret;
   }
 

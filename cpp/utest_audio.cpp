@@ -20,7 +20,7 @@ class AudioTest : public ::testing::Test {
   const uint8_t fid_index = 0;
   const uint8_t act_index = 1;
   const uint8_t len_index = 3;
-  const uint8_t first_msg_index = 4;
+  const uint8_t first_msg_index = 5;
 };
 
 // register
@@ -29,7 +29,7 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
   uint16_t act = 0x1234;
-  uint8_t length = 2;
+  uint16_t length = 2;
   aud_command.register_command_serialize(act, MajorVersion, MinorVersion,
                                          stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, stream[fid_index]);
@@ -44,7 +44,7 @@ TEST_F(AudioTest, CreateRegisterCommand_getFid_OK) {
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
   uint16_t act = 0x1234;
-  uint8_t length = 2;
+  uint16_t length = 2;
   aud_command.register_command_serialize(act, MajorVersion, MinorVersion,
                                          stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, aud_command.getFid(stream));
@@ -74,7 +74,7 @@ TEST_F(AudioTest, CreateRegisterResponse_content_OK) {
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
   uint16_t act = 0x1234;
-  uint8_t length = 2;
+  uint16_t length = 2;
   aud_response.register_response_serialize(act, MajorVersion, MinorVersion,
                                            stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER + 1, stream[fid_index]);
@@ -89,7 +89,7 @@ TEST_F(AudioTest, CreateRegisterResponse_getFid_OK) {
   uint8_t MajorVersion = 1;
   uint8_t MinorVersion = 2;
   uint16_t act = 0x1234;
-  uint8_t length = 2;
+  uint16_t length = 2;
   aud_response.register_response_serialize(act, MajorVersion, MinorVersion,
                                            stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER + 1, aud_response.getFid(stream));
@@ -120,7 +120,7 @@ TEST_F(AudioTest, CreateSetStreamStateCommand_content_OK) {
   StreamId streamId = StreamId::CIVIC_INFOTAINMENT_STREAM;
   Operation operation = Operation::OP_START;
   uint16_t act = 0x1234;
-  uint8_t length = 8;
+  uint16_t length = 8;
   aud_command.setStreamState_command_serialize(act, streamId, operation,
                                                stream);
   EXPECT_EQ((uint8_t)FID::FID_SETSTREAMSTATE, stream[fid_index]);
@@ -135,7 +135,7 @@ TEST_F(AudioTest, CreateSetStreamStateCommand_getFid_OK) {
   StreamId streamId = StreamId::CIVIC_INFOTAINMENT_STREAM;
   Operation operation = Operation::OP_START;
   uint16_t act = 0x1234;
-  uint8_t length = 2;
+  uint16_t length = 2;
   aud_command.setStreamState_command_serialize(act, streamId, operation,
                                                stream);
   EXPECT_EQ((uint8_t)FID::FID_SETSTREAMSTATE, aud_command.getFid(stream));

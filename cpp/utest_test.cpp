@@ -30,7 +30,7 @@ class TestTheTest : public ::testing::Test {
   const uint8_t fid_index = 0;
   const uint8_t act_index = 1;
   const uint8_t len_index = 3;
-  const uint8_t first_msg_index = 4;
+  const uint8_t first_msg_index = 5;
 };
 
 #if 1  // register
@@ -71,8 +71,8 @@ TEST_F(TestTheTest, DeserializeRegisterCommand_deserialize_OK) {
   uint8_t MajorVersion_r = 0;
   uint8_t MinorVersion_r = 0;
   uint16_t act_r = 0;
-  test_command.register_command_deserialize(stream, act_r, MajorVersion_r,
-                                            MinorVersion_r);
+  EXPECT_TRUE(test_command.register_command_deserialize(stream, act_r, MajorVersion_r,
+                                            MinorVersion_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(MajorVersion, MajorVersion_r);
@@ -110,7 +110,7 @@ TEST_F(TestTheTest, DeserializeSetEnumCommand_deserialize_OK) {
 
   TestEnum1 testEnum_r = (TestEnum1)0;
   uint16_t act_r = 0;
-  test_command.setEnum_command_deserialize(stream, act_r, testEnum_r);
+  EXPECT_TRUE(test_command.setEnum_command_deserialize(stream, act_r, testEnum_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(testEnum, testEnum_r);
@@ -165,8 +165,8 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesCommand_deserialize_OK) {
   uint16_t u16Var_r = 0x1234;
   uint32_t u32Var_r = 0x12345678;
   uint64_t u64Var_r = 0x1234567887654321;
-  test_command.setIntegerTypes_command_deserialize(
-      stream, act_r, u8Var_r, u16Var_r, u32Var_r, u64Var_r);
+  EXPECT_TRUE(test_command.setIntegerTypes_command_deserialize(
+      stream, act_r, u8Var_r, u16Var_r, u32Var_r, u64Var_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(u8Var, u8Var_r);
@@ -218,12 +218,12 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
                                                   u8Var, stream);
 
   uint16_t act_r = 0;
-  uint8_t u8Var_r = 0x12;
-  uint16_t u16Var_r = 0x1234;
-  uint32_t u32Var_r = 0x12345678;
-  uint64_t u64Var_r = 0x1234567887654321;
-  test_command.setIntegerTypes_response_deserialize(
-      stream, act_r, u64Var_r, u32Var_r, u16Var_r, u8Var_r);
+  uint8_t u8Var_r = 0;
+  uint16_t u16Var_r = 0;
+  uint32_t u32Var_r = 0;
+  uint64_t u64Var_r = 05;
+  EXPECT_TRUE(test_command.setIntegerTypes_response_deserialize(
+      stream, act_r, u64Var_r, u32Var_r, u16Var_r, u8Var_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(u8Var, u8Var_r);
@@ -238,14 +238,16 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_content_OK) {
   test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
-  uint8_t u8VarLength = testVector.size();
-  uint8_t length = 1 + u8VarLength;
-  test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
+  uint8_t u8Var = 0xFF;
+  uint16_t u8VarLength = testVector.size();
+  uint8_t length = 1 + 2 + u8VarLength;
+  test_command.setIntegerArrayTypes_command_serialize(act, u8Var,
                                                       testVector, stream);
   EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, stream[len_index]);
-  EXPECT_EQ(u8VarLength, stream[first_msg_index]);
-  EXPECT_THAT(convertToUu8Vector(first_msg_index + 1, u8VarLength),
+  EXPECT_EQ(u8Var, stream[first_msg_index]);
+  EXPECT_EQ(u8VarLength, stream[first_msg_index + 1]);
+  EXPECT_THAT(convertToUu8Vector(first_msg_index + 3, u8VarLength),
               ::testing::ContainerEq(testVector));
 }
 
@@ -257,26 +259,28 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_getFid_OK) {
   uint8_t length = 1 + u8VarLength;
   test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
                                                       testVector, stream);
-  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES, test_command.getFid(stream));
+  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES,
+            test_command.getFid(stream));
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesCommand_deserialize_OK) {
   test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
-  uint8_t u8VarLength = testVector.size();
+  uint8_t u8Var = 0xFF;
+  uint16_t u8VarLength = testVector.size();
   uint8_t length = 1 + u8VarLength;
-  test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
+  test_command.setIntegerArrayTypes_command_serialize(act, u8Var,
                                                       testVector, stream);
 
   uint16_t act_r = 0;
   std::vector<uint8_t> testVector_r;
-  uint8_t u8VarLength_r = 0;
-  test_command.setIntegerArrayTypes_command_deserialize(
-      stream, act_r, u8VarLength_r, testVector_r);
+  uint8_t u8Var_r = 0;
+  EXPECT_TRUE(test_command.setIntegerArrayTypes_command_deserialize(
+      stream, act_r, u8Var_r, testVector_r));
 
   EXPECT_EQ(act, act_r);
-  EXPECT_EQ(u8VarLength, u8VarLength_r);
+  EXPECT_EQ(u8Var, u8Var_r);
   EXPECT_TRUE(testVector == testVector_r);
 }
 
@@ -298,7 +302,8 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_getFid_OK) {
   uint8_t length = 1 + u8VarLength;
   test_command.setIntegerArrayTypes_response_serialize(act, u8VarLength,
                                                        testVector, stream);
-  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES + 1, test_command.getFid(stream));
+  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES + 1,
+            test_command.getFid(stream));
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesResponse_deserialize_OK) {
@@ -342,7 +347,7 @@ TEST_F(TestTheTest, DeserializeSetBoolTypesCommand_deserialize_OK) {
 
   uint16_t act_r = 0;
   bool boolVar_r = false;
-  test_command.setBoolTypes_command_deserialize(stream, act_r, boolVar_r);
+  EXPECT_TRUE(test_command.setBoolTypes_command_deserialize(stream, act_r, boolVar_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(boolVar, boolVar_r);
@@ -377,7 +382,7 @@ TEST_F(TestTheTest, DeserializeSetBoolTypesResponse_deserialize_OK) {
 
   uint16_t act_r = 0;
   bool boolVar_r = false;
-  test_command.setBoolTypes_response_deserialize(stream, act_r, boolVar_r);
+  EXPECT_TRUE(test_command.setBoolTypes_response_deserialize(stream, act_r, boolVar_r));
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(boolVar, boolVar_r);

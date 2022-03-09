@@ -11,8 +11,8 @@
             "-I/home/micha/git/pyfrancagen/cpp",
             "-I/home/micha/git/pyfrancagen/lbs/src_gen",
             "-g",
-            "/home/micha/git/pyfrancagen/cpp/main.cpp",
-            "/home/micha/git/pyfrancagen/lbs/src_gen/audio.cpp",
+            "/home/micha/git/pyfrancagen/cpp/main_test.cpp",
+            "/home/micha/git/pyfrancagen/lbs/src_gen/test.cpp",
             "/home/micha/git/pyfrancagen/cpp/serializer.cpp",
             "-o",
             "/home/micha/git/pyfrancagen/cpp/serializer"
@@ -39,13 +39,13 @@
             "-I/home/micha/git/pyfrancagen/cpp",
             "-I/home/micha/git/pyfrancagen/lbs/src_gen",
             "-g",
-            "/home/micha/git/pyfrancagen/cpp/utest.cpp",
-            "/home/micha/git/pyfrancagen/lbs/src_gen/audio.cpp",
+            "/home/micha/git/pyfrancagen/cpp/utest_test.cpp",
+            "/home/micha/git/pyfrancagen/lbs/src_gen/test.cpp",
             "/home/micha/git/pyfrancagen/cpp/serializer.cpp",
             "-lgtest",
             "-lgtest_main",
             "-o",
-            "/home/micha/git/pyfrancagen/cpp/utest_serializer"
+            "/home/micha/git/pyfrancagen/cpp/utest_test"
          ],
          "options": {
             "cwd": "${fileDirname}"

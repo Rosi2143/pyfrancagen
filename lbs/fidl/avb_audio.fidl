@@ -89,8 +89,8 @@ interface audio {
 	<** @description: FID=0x27; command error message **>
 	broadcast commandErrorOccured {
 		out {
-			UInt8 fid
-			UInt16 act
+			UInt8 error_fid
+			UInt16 error_act
 			BroadcastErrors err
 			String errorDesciption
 		}

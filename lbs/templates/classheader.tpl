@@ -19,6 +19,10 @@ class {{ name }}
 
     // get the function ID for any message_buffer
     UInt8 getFid(const buffer &message_buffer) const {return message_buffer[fid_index];}
+
+    // #################
+    // functions methods
+    // #################
     {% for m in item.methods.values() %}
     // functions for {{ m.name }}
     // Commands
@@ -53,6 +57,27 @@ class {{ name }}
                               {{ maybecomma() }} {{ render_type(p) }}& {{ p.name }}{% endfor %}
                       );
 
+    {%endfor%}
+
+    // ####################
+    // functions broadcasts
+    // ####################
+    {% for m in item.broadcasts.values() %}
+    // functions for {{ m.name }}
+    {% set maybecomma = joiner(",") %}
+    void {{ m.name }}_broadcast_serialize (
+                        const UInt16& act{{ maybecomma() }}
+                        {%- for p in m.out_args.values() -%}
+                          {{ maybecomma() }}const {{ render_type(p) }}& {{ p.name }}{% endfor %}
+                        , buffer &message_buffer
+                      );
+    {% set maybecomma = joiner(",") %}
+    bool {{ m.name }}_broadcast_deserialize (
+                        const buffer &message_buffer,
+                        UInt16& act{{ maybecomma() }}
+                        {%- for p in m.out_args.values() -%}
+                          {{ maybecomma() }} {{ render_type(p) }}& {{ p.name }}{% endfor %}
+                      );
     {%endfor%}
 
   private:

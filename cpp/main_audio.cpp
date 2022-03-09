@@ -18,11 +18,14 @@ void print_container(const buffer& buf, const string& name) {
 int main() {
   vector<uint8_t> stream_c;
   vector<uint8_t> stream_r;
+  vector<uint8_t> stream_b;
 
   audio aud_command_send;
   audio aud_command_receive;
   audio aud_response_send;
   audio aud_response_receive;
+  audio aud_broadcast_send;
+  audio aud_broadcast_receive;
 
   uint8_t MajorVersion_c = 1;
   uint8_t MinorVersion_c = 2;
@@ -48,15 +51,11 @@ int main() {
                                                MinorVersion_c, stream_r);
   print_container(stream_r, "register response");
 
-  MajorVersion_r = 0;
-  MinorVersion_r = 0;
-  act_r = 0;
-  // enable for error tests
-  // stream_r[0] = 0x20;
-  if (aud_command_receive.register_response_deserialize(
-          stream_r, act_r, MajorVersion_r, MinorVersion_r))
-    cout << "act=" << act_r << ", Majorversion=" << hex << +MajorVersion_r
-         << ", Minorversion=" << hex << +MinorVersion_r << endl;
-  else
-    cout << "error" << endl;
+  uint16_t act_b = 0xdead;
+  BroadcastErrors broadcastError =
+      BroadcastErrors::FAILURE_CRF_STREAM_NOT_AVAILABLE;
+  string comment("TestMessage 1");
+  aud_broadcast_send.errorOccured_broadcast_serialize(act_b, broadcastError,
+                                                       comment, stream_b);
+  print_container(stream_b, "errorOccured broadcast");
 }
