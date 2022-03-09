@@ -1,0 +1,144 @@
+package org.bosch.xc.civic.avb_c.test
+
+<** @description: Test interface is used to test the correctness of the code generator
+								  and give an example of how to use the generator.
+									check Franca User Guide: https://drive.google.com/drive/folders/0B7JseVbR6jvhUnhLOUM5ZGxOOG8?resourcekey=0-U-X53hicOvlqAZCG86dCUQ
+**>
+
+interface test {
+	version { major 1 minor 2 }
+
+	<** @description: register client and check version info. **>
+	method register {
+		in {
+			<** @description: major version of client interface implementation **>
+			UInt8 majorClientVersion
+			<** @description: minor version of client interface implementation **>
+			UInt8 minorClientVersion
+		}
+		out {
+			<** @description: major version of server interface implementation **>
+			UInt8 majorServerVersion
+			<** @description: minor version of server interface implementation **>
+			UInt8 minorServerVersion
+		}
+	}
+
+	<** @description: deregister client **>
+	method deregister {
+	}
+
+	<** @description: check if enums are working **>
+	method setEnum {
+		in {
+			<** @description: check if enums are working **>
+			TestEnum1 testEnum
+		}
+		out {
+			<** @description: check if enums are working **>
+			TestEnum2 testEnum
+		}
+	}
+
+	<** @description: set standard integer types **>
+	method setIntegerTypes {
+		in {
+			<** @description: test all integer types **>
+			UInt8 uint8Var
+			UInt16 uint16Var
+			UInt32 uint32Var
+			UInt64 uint64Var
+		}
+		out {
+			UInt64 uint64Var
+			UInt32 uint32Var
+			UInt16 uint16Var
+			UInt8 uint8Var
+		}
+	}
+
+	<** @description: set arrays of integer types **>
+	<**
+	method setIntegerArrayTypes {
+		in {
+			<** @description: test all arrays of integer types **\>
+			array uint8Array of UInt8
+			array uint16Array of UInt16
+			array uint32Array of UInt32
+			array uint64Array of UInt64
+		}
+		out {
+			array uint64Array of UInt64
+			array uint32Array of UInt32
+			array uint16Array of UInt16
+			array uint8Array of UInt8
+		}
+	}
+**>
+
+	<** @description: set dynamic types **>
+	method setDynamicTypes {
+		in {
+			<** @description: test the boolean type **>
+			String strinVar
+		}
+		out {
+			ByteBuffer byteBufferVar
+		}
+	}
+
+	<** @description: set boolean type **>
+	method setBoolTypes {
+		in {
+			<** @description: test the boolean type **>
+			Boolean boolVar
+		}
+		out {
+			Boolean boolVar
+		}
+	}
+
+	<** @description: test broadcasts **>
+	broadcast broadcastTest {
+		out {
+			UInt32 errVar
+		}
+	}
+
+	enumeration FID {
+	    <** @description: enumeration to define the function ID's
+												Naming: FID_<method/broadcast name> **>
+        FID_REGISTER = 32
+        FID_DEREGISTER = 34
+        FID_SETENUM = 48
+        FID_SETINTEGERTYPES = 50
+        FID_SETINTEGERARRAYTYPES = 52
+        FID_SETDYNAMICTYPES = 54
+        FID_SETBOOLTYPES = 56
+        FID_BROADCASTTEST = 39
+	}
+
+	<** @description: test an enum **>
+	enumeration TestEnum1 {
+		TESTENUM1_0
+		TESTENUM1_1
+		TESTENUM1_10 = 10
+		TESTENUM1_100 = 100
+	}
+
+	<** @description: test an extended enum **>
+	enumeration TestEnum2 extends TestEnumBase {
+		TESTENUM2_10
+		TESTENUM2_11
+		TESTENUM2_20 = 20
+	}
+
+	<** @description: test a BaseEnum **>
+	enumeration TestEnumBase {
+		BASEENUM_0
+		BASEENUM_1
+		BASEENUM_2
+		BASEENUM_3
+	}
+
+}

@@ -11,7 +11,8 @@ from pyfranca_cpp import *
 LOCALINPUTDIR = '../lbs/fidl'
 
 FIDL_FILES =  [ '%s/%s' % (LOCALINPUTDIR,s) for s in [
-    'avb_audio.fidl' ] ]
+    'avb_audio.fidl',
+    'avb_test.fidl' ] ]
 
 def main():
     for f in FIDL_FILES:

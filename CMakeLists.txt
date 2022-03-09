@@ -20,10 +20,14 @@ enable_testing()
 
 include_directories(${ICC_Generared_Source}/ ./cpp)
 
-add_executable(audio_avb ./cpp/main.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}audio.cpp)
+add_executable(audio_avb ./cpp/main_audio.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}audio.cpp)
+add_executable(test_avb ./cpp/main_test.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}test.cpp)
 
-add_executable(audio_avb_test ./cpp/utest.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}audio.cpp)
+add_executable(audio_avb_test ./cpp/utest_audio.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}audio.cpp)
 target_link_libraries(audio_avb_test gtest gtest_main pthread)
+
+add_executable(test_avb_test ./cpp/utest_test.cpp ./cpp/serializer.cpp ${ICC_Generared_Source}test.cpp)
+target_link_libraries(test_avb_test gtest gtest_main pthread)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
