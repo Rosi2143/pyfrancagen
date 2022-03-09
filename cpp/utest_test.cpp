@@ -1,5 +1,6 @@
 #include <vector>
 
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "test.h"
 
@@ -15,6 +16,15 @@ class TestTheTest : public ::testing::Test {
   }
   uint64_t convertToU64(const uint8_t& index) {
     return (convertToU32(index)) + (((uint64_t)convertToU32(index + 4)) << 32);
+  }
+  std::vector<uint8_t> convertToUu8Vector(const uint8_t& index,
+                                          const uint8_t& length) {
+    std::vector<uint8_t> output;
+    output.clear();
+    for (int i = 0; i < length; i++) {
+      output.push_back(stream[index + i]);
+    }
+    return output;
   }
   std::vector<uint8_t> stream;
   const uint8_t fid_index = 0;
@@ -223,6 +233,85 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
 }
 #endif
 
+#if 1  // setIntegerArrayTypes
+TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_content_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
+                                                      testVector, stream);
+  EXPECT_EQ(act, convertToU16(act_index));
+  EXPECT_EQ(length, stream[len_index]);
+  EXPECT_EQ(u8VarLength, stream[first_msg_index]);
+  EXPECT_THAT(convertToUu8Vector(first_msg_index + 1, u8VarLength),
+              ::testing::ContainerEq(testVector));
+}
+
+TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_getFid_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
+                                                      testVector, stream);
+  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES, test_command.getFid(stream));
+}
+
+TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesCommand_deserialize_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_command_serialize(act, u8VarLength,
+                                                      testVector, stream);
+
+  uint16_t act_r = 0;
+  std::vector<uint8_t> testVector_r;
+  uint8_t u8VarLength_r = 0;
+  test_command.setIntegerArrayTypes_command_deserialize(
+      stream, act_r, u8VarLength_r, testVector_r);
+
+  EXPECT_EQ(act, act_r);
+  EXPECT_EQ(u8VarLength, u8VarLength_r);
+  EXPECT_TRUE(testVector == testVector_r);
+}
+
+TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_content_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint64_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_response_serialize(act, u8VarLength,
+                                                       testVector, stream);
+}
+
+TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_getFid_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint64_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_response_serialize(act, u8VarLength,
+                                                       testVector, stream);
+  EXPECT_EQ((uint8_t)FID::FID_SETINTEGERARRAYTYPES + 1, test_command.getFid(stream));
+}
+
+TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesResponse_deserialize_OK) {
+  test test_command;
+  uint16_t act = 0xDCBA;
+  std::vector<uint64_t> testVector{'H', 'a', 'l', 'l', 'o'};
+  uint8_t u8VarLength = testVector.size();
+  uint8_t length = 1 + u8VarLength;
+  test_command.setIntegerArrayTypes_response_serialize(act, u8VarLength,
+                                                       testVector, stream);
+}
+#endif
+
 #if 1  // setBoolTypes
 TEST_F(TestTheTest, CreateSetBoolTypesCommand_content_OK) {
   test test_command;
@@ -253,8 +342,7 @@ TEST_F(TestTheTest, DeserializeSetBoolTypesCommand_deserialize_OK) {
 
   uint16_t act_r = 0;
   bool boolVar_r = false;
-  test_command.setBoolTypes_command_deserialize(
-      stream, act_r, boolVar_r);
+  test_command.setBoolTypes_command_deserialize(stream, act_r, boolVar_r);
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(boolVar, boolVar_r);
@@ -289,8 +377,7 @@ TEST_F(TestTheTest, DeserializeSetBoolTypesResponse_deserialize_OK) {
 
   uint16_t act_r = 0;
   bool boolVar_r = false;
-  test_command.setBoolTypes_response_deserialize(
-      stream, act_r, boolVar_r);
+  test_command.setBoolTypes_response_deserialize(stream, act_r, boolVar_r);
 
   EXPECT_EQ(act, act_r);
   EXPECT_EQ(boolVar, boolVar_r);

@@ -58,23 +58,29 @@ interface test {
 	}
 
 	<** @description: set arrays of integer types **>
-	<**
 	method setIntegerArrayTypes {
 		in {
-			<** @description: test all arrays of integer types **\>
-			array uint8Array of UInt8
-			array uint16Array of UInt16
-			array uint32Array of UInt32
-			array uint64Array of UInt64
+			<** @description: test all arrays of integer types **>
+			UInt8 uint8ArrayLength
+			UInt8[] uint8Array
+<**			UInt8 uint16ArrayLength
+			UInt16[] uint16Array
+			UInt8 uint32ArrayLength
+			UInt32[] uint32Array
+			UInt8 uint64ArrayLength
+			UInt64[] uint64Array**>
 		}
 		out {
-			array uint64Array of UInt64
-			array uint32Array of UInt32
-			array uint16Array of UInt16
-			array uint8Array of UInt8
+			UInt8 uint64ArrayLength
+			UInt64[] uint64Array
+<**			UInt8 uint32ArrayLength
+			UInt32[] uint32Array
+			UInt8 uint16ArrayLength
+			UInt16[] uint16Array
+			UInt8 uint8ArrayLength
+			UInt8[] uint8Array**>
 		}
 	}
-**>
 
 	<** @description: set dynamic types **>
 	method setDynamicTypes {

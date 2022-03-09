@@ -7,14 +7,14 @@ class AudioTest : public ::testing::Test {
  protected:
   void SetUp() override {}
   void TearDown() override {}
-  uint16_t convertTo16(const uint8_t& index) {
+  uint16_t convertToU16(const uint8_t& index) {
     return (stream[index]) + (((uint16_t)stream[index + 1]) << 8);
   }
-  uint32_t convertTo32(const uint8_t& index) {
-    return (convertTo16(index)) + (((uint32_t)convertTo16(index + 2)) << 16);
+  uint32_t convertToU32(const uint8_t& index) {
+    return (convertToU16(index)) + (((uint32_t)convertToU16(index + 2)) << 16);
   }
-  uint64_t convertTo64(const uint8_t& index) {
-    return (convertTo32(index)) + (((uint64_t)(index + 4)) << 32);
+  uint64_t convertToU64(const uint8_t& index) {
+    return (convertToU32(index)) + (((uint64_t)convertToU16(index + 4)) << 32);
   }
   std::vector<uint8_t> stream;
   const uint8_t fid_index = 0;
@@ -33,7 +33,7 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
   aud_command.register_command_serialize(act, MajorVersion, MinorVersion,
                                          stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, stream[fid_index]);
-  EXPECT_EQ(act, convertTo16(act_index));
+  EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, stream[len_index]);
   EXPECT_EQ(MajorVersion, stream[first_msg_index]);
   EXPECT_EQ(MinorVersion, stream[first_msg_index + 1]);
@@ -78,7 +78,7 @@ TEST_F(AudioTest, CreateRegisterResponse_content_OK) {
   aud_response.register_response_serialize(act, MajorVersion, MinorVersion,
                                            stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER + 1, stream[fid_index]);
-  EXPECT_EQ(act, convertTo16(act_index));
+  EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, stream[len_index]);
   EXPECT_EQ(MajorVersion, stream[first_msg_index]);
   EXPECT_EQ(MinorVersion, stream[first_msg_index + 1]);
@@ -124,7 +124,7 @@ TEST_F(AudioTest, CreateSetStreamStateCommand_content_OK) {
   aud_command.setStreamState_command_serialize(act, streamId, operation,
                                                stream);
   EXPECT_EQ((uint8_t)FID::FID_SETSTREAMSTATE, stream[fid_index]);
-  EXPECT_EQ(act, convertTo16(act_index));
+  EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, stream[len_index]);
   EXPECT_EQ((uint8_t)streamId, stream[first_msg_index]);
   EXPECT_EQ((uint8_t)operation, stream[first_msg_index + 4]);

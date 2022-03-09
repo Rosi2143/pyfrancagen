@@ -32,7 +32,7 @@ void {{ name }}::{{m.name}}_command_serialize (
   container.push_back(act);
 
   UInt8 messageLength = 0{%- for p in m.in_args.values() -%}
-    + sizeof({{ render_type(p) }}){% endfor %};
+    + sizeof({{ p.name }}){% endfor %};
   container.push_back(messageLength);
 
   {%- for p in m.in_args.values() -%}
@@ -60,7 +60,7 @@ bool {{ name }}::{{m.name}}_command_deserialize (
   act = container.pop_front(act);
 
   UInt8 messageLength_expected = 0{%- for p in m.in_args.values() -%}
-   + sizeof({{ render_type(p) }}){% endfor %};
+   + sizeof({{ p.name }}){% endfor %};
   UInt8 messageLength_received = container.pop_front(messageLength_received);
   if (messageLength_expected != messageLength_received){
      return false;
@@ -89,7 +89,7 @@ void {{ name }}::{{m.name}}_response_serialize (
   container.push_back(act);
 
   UInt8 messageLength = 0{%- for p in m.out_args.values() -%}
-    + sizeof({{ render_type(p) }}){% endfor %};
+    + sizeof({{ p.name }}){% endfor %};
   container.push_back(messageLength);
 
   {%- for p in m.out_args.values() -%}
@@ -117,7 +117,7 @@ bool {{ name }}::{{m.name}}_response_deserialize (
   act = container.pop_front(act);
 
   UInt8 messageLength_expected = 0{%- for p in m.out_args.values() -%}
-   + sizeof({{ render_type(p) }}){% endfor %};
+   + sizeof({{ p.name }}){% endfor %};
   UInt8 messageLength_received = container.pop_front(messageLength_received);
   if (messageLength_expected != messageLength_received){
      return false;
