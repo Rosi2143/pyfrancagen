@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 
-typedef unsigned char byte_t;
-typedef std::vector<byte_t> buffer;
+typedef unsigned char uint8_t;
+typedef std::vector<uint8_t> buffer;
 
 class serializer {
  public:
@@ -15,14 +15,14 @@ class serializer {
   void clear();
 
   uint16_t push_back(const std::string& obj);
-  uint16_t push_back(const std::vector<uint8_t>& obj);
+  uint16_t push_back(const buffer& obj);
   template <typename T>
   uint16_t push_back(const T& obj) {
     serialize(obj);
     return sizeof(obj);
   }
 
-  std::string pop_front(const std::string& obj, const uint8_t& length, uint16_t& parameterLength);
+  std::string pop_front(const std::string& obj, uint16_t& parameterLength);
   std::vector<uint8_t> pop_front(const std::vector<uint8_t>& obj, uint16_t& parameterLength);
   template <typename T>
   T pop_front(const T& obj, uint16_t& parameterLength) {
@@ -57,7 +57,7 @@ class serializer {
 
     buf.insert(buf.begin(), _message.data(), _message.data() + start_size_buffer);
 
-    byte_t const* obj_begin = reinterpret_cast<byte_t const*>(&obj);
+    uint8_t const* obj_begin = reinterpret_cast<uint8_t const*>(&obj);
     copy(obj_begin, obj_begin + size_new_obj, buf.begin() + start_size_buffer);
 
     buf.resize(start_size_buffer + size_new_obj);

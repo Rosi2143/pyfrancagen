@@ -3,19 +3,19 @@
    "tasks": [
       {
          "type": "cppbuild",
-         "label": "C/C++: g++-11 build active file",
-         "command": "/usr/bin/g++-11",
+         "label": "C/C++: g++ build active file",
+         "command": "/usr/bin/g++",
          "args": [
             "-fdiagnostics-color=always",
             "-I${fileDirname}",
-            "-I/home/micha/git/pyfrancagen/cpp",
-            "-I/home/micha/git/pyfrancagen/lbs/src_gen",
+            "-I${workspaceFolder}/cpp",
+            "-I${workspaceFolder}/lbs/src_gen",
             "-g",
-            "/home/micha/git/pyfrancagen/cpp/main_test.cpp",
-            "/home/micha/git/pyfrancagen/lbs/src_gen/test.cpp",
-            "/home/micha/git/pyfrancagen/cpp/serializer.cpp",
+            "${workspaceFolder}/cpp/main_test.cpp",
+            "${workspaceFolder}/lbs/src_gen/test.cpp",
+            "${workspaceFolder}/cpp/serializer.cpp",
             "-o",
-            "/home/micha/git/pyfrancagen/cpp/serializer"
+            "${workspaceFolder}/cpp/serializer"
          ],
          "options": {
             "cwd": "${fileDirname}"
@@ -31,21 +31,22 @@
       },
       {
          "type": "cppbuild",
-         "label": "C/C++: g++-11 build active test",
-         "command": "/usr/bin/g++-11",
+         "label": "C/C++: g++ build active test",
+         "command": "/usr/bin/g++",
          "args": [
             "-fdiagnostics-color=always",
             "-I${fileDirname}",
-            "-I/home/micha/git/pyfrancagen/cpp",
-            "-I/home/micha/git/pyfrancagen/lbs/src_gen",
+            "-I${workspaceFolder}/cpp",
+            "-I${workspaceFolder}/lbs/src_gen",
             "-g",
-            "/home/micha/git/pyfrancagen/cpp/utest_test.cpp",
-            "/home/micha/git/pyfrancagen/lbs/src_gen/test.cpp",
-            "/home/micha/git/pyfrancagen/cpp/serializer.cpp",
+            "${workspaceFolder}/cpp/utest_test.cpp",
+            "${workspaceFolder}/lbs/src_gen/test.cpp",
+            "${workspaceFolder}/cpp/serializer.cpp",
             "-lgtest",
             "-lgtest_main",
+            "-lpthread",
             "-o",
-            "/home/micha/git/pyfrancagen/cpp/utest_test"
+            "${workspaceFolder}/cpp/utest_test"
          ],
          "options": {
             "cwd": "${fileDirname}"

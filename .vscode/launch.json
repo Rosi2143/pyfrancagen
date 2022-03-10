@@ -14,10 +14,10 @@
          "cwd": "${fileDirname}"
       },
       {
-         "name": "g++-11 - Build and debug active file",
+         "name": "g++ - Build and debug active file",
          "type": "cppdbg",
          "request": "launch",
-         "program": "/home/micha/git/pyfrancagen/cpp/utest_test",
+         "program": "${workspaceFolder}/cpp/utest_test",
          "args": [],
          "stopAtEntry": true,
          "cwd": "${fileDirname}",
@@ -36,7 +36,7 @@
                "ignoreFailures": true
             }
          ],
-         "preLaunchTask": "C/C++: g++-11 build active test",
+         "preLaunchTask": "C/C++: g++ build active test",
          "miDebuggerPath": "/bin/gdb"
       }
    ]

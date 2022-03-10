@@ -61,24 +61,25 @@ interface test {
 	method setIntegerArrayTypes {
 		in {
 			<** @description: test all arrays of integer types **>
-			UInt8 uint8ArrayLength
+			UInt8 uint8Data
 			UInt8[] uint8Array
 <**			UInt8 uint16ArrayLength
-			UInt16[] uint16Array
+			UInt16[] uint16Array			-- not yet supported
 			UInt8 uint32ArrayLength
-			UInt32[] uint32Array
+			UInt32[] uint32Array      -- not yet supported
 			UInt8 uint64ArrayLength
-			UInt64[] uint64Array**>
+			UInt64[] uint64Array      -- not yet supported**>
 		}
 		out {
-			UInt8 uint64ArrayLength
-			UInt64[] uint64Array
-<**			UInt8 uint32ArrayLength
-			UInt32[] uint32Array
+<**			UInt8 uint8Data
+			UInt64[] uint64Array			-- not yet supported
+			UInt8 uint32ArrayLength
+			UInt32[] uint32Array			-- not yet supported
 			UInt8 uint16ArrayLength
-			UInt16[] uint16Array
-			UInt8 uint8ArrayLength
-			UInt8[] uint8Array**>
+			UInt16[] uint16Array			-- not yet supported
+			UInt8 uint8ArrayLength		**>
+			UInt8[] uint8Array
+			UInt8 uint8Data
 		}
 	}
 
@@ -86,10 +87,12 @@ interface test {
 	method setDynamicTypes {
 		in {
 			<** @description: test the boolean type **>
-			String strinVar
+			String stringVar
+			UInt64 int64Var
 		}
 		out {
 			ByteBuffer byteBufferVar
+			UInt32 int32Var
 		}
 	}
 

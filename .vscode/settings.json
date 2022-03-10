@@ -50,6 +50,7 @@
       "streambuf": "cpp",
       "typeinfo": "cpp"
    },
-   "esbonio.server.enabled": true,
-   "cmake.sourceDirectory": "${workspaceFolder}/build"
+   "esbonio.server.enabled": false,
+   "cmake.sourceDirectory": "${workspaceFolder}/build",
+   "restructuredtext.languageServer.disabled": true
 }

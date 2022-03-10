@@ -9,7 +9,7 @@ set(ICC_Generared_Source "./lbs/src_gen/")
 
 add_custom_command(
   COMMENT "Generate ICC code"
-  OUTPUT ${ICC_Generared_Source}audio.h ${ICC_Generared_Source}audio.cpp
+  OUTPUT ${ICC_Generared_Source}audio.h ${ICC_Generared_Source}audio.cpp ${ICC_Generared_Source}test.h ${ICC_Generared_Source}test.cpp
   COMMAND /bin/bash ./gradleDocker.sh --image=icc_generator --run="\"python3 ./generate_lbs.py\""
   WORKING_DIRECTORY .
   VERBATIM

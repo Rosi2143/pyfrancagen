@@ -21,5 +21,5 @@ typedef bool Boolean;
 typedef float Float;
 typedef double Double;
 typedef std::string String;
-typedef std::vector<char> ByteBuffer;
+typedef std::vector<uint8_t> ByteBuffer;
 
