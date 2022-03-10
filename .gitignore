@@ -14,3 +14,5 @@ CPackSourceConfig.cmake
 DartConfiguration.tcl
 
 build/
+
+lbs/fidl/avb_audio.fidl
