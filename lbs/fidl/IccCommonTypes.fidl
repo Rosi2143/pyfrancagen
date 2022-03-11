@@ -1,0 +1,32 @@
+package org.bosch.xc.civic.icc
+
+<** @description: Test interface is used to test the correctness of the code generator
+								  and give an example of how to use the generator.
+									check Franca User Guide: https://drive.google.com/drive/folders/0B7JseVbR6jvhUnhLOUM5ZGxOOG8?resourcekey=0-U-X53hicOvlqAZCG86dCUQ
+**>
+
+typeCollection IccCommonTypes {
+	version {
+		major 1
+		minor 0
+	}
+
+	<** @description: command response errors **>
+	enumeration GenericCommandErrors {
+		<** @description: No Error **>
+		ERR_NO_ERROR
+		<** @description: Server rejected the version of the client. **>
+		ERR_VERSION_MISMATCH
+		<** @description: FID is not known to the server. **>
+		ERR_UNKNOWN_FID
+		<** @description: A parameter value is not known. **>
+		ERR_UNKNOWN_PARAMETER
+		<** @description: Payload of FID does not match expectation. **>
+		ERR_UNDEFINED_PAYLOAD
+		<** @description: FID known but cannot be processed. Precondition not matching. **>
+		ERR_SEQUENCE_ERROR
+	}
+
+    <** @description:Unique ID for a POI Categories**>
+    typedef Version is UInt8
+}

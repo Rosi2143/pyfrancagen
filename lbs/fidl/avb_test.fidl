@@ -1,5 +1,7 @@
 package org.bosch.xc.civic.avb_c.test
 
+import org.bosch.xc.civic.icc.IccCommonTypes.* from "IccCommonTypes.fidl"
+
 <** @description: Test interface is used to test the correctness of the code generator
 								  and give an example of how to use the generator.
 									check Franca User Guide: https://drive.google.com/drive/folders/0B7JseVbR6jvhUnhLOUM5ZGxOOG8?resourcekey=0-U-X53hicOvlqAZCG86dCUQ
@@ -12,15 +14,15 @@ interface test {
 	method register {
 		in {
 			<** @description: major version of client interface implementation **>
-			UInt8 majorClientVersion
+			VersionNumber majorClientVersion
 			<** @description: minor version of client interface implementation **>
-			UInt8 minorClientVersion
+			VersionNumber minorClientVersion
 		}
 		out {
 			<** @description: major version of server interface implementation **>
-			UInt8 majorServerVersion
+			VersionNumber majorServerVersion
 			<** @description: minor version of server interface implementation **>
-			UInt8 minorServerVersion
+			VersionNumber minorServerVersion
 		}
 	}
 
