@@ -59,6 +59,19 @@ interface test {
 		}
 	}
 
+	<** @description: set standard floating point types **>
+	method setFloatingPointTypes {
+		in {
+			<** @description: test all floating point types **>
+			Float floatVar
+			Double doubleVar
+		}
+		out {
+			Double doubleVar
+			Float floatVar
+		}
+	}
+
 	<** @description: set arrays of integer types **>
 	method setIntegerArrayTypes {
 		in {
@@ -123,9 +136,10 @@ interface test {
         FID_DEREGISTER = 34
         FID_SETENUM = 48
         FID_SETINTEGERTYPES = 50
-        FID_SETINTEGERARRAYTYPES = 52
-        FID_SETDYNAMICTYPES = 54
-        FID_SETBOOLTYPES = 56
+        FID_SETFLOATINGPOINTTYPES = 52
+        FID_SETINTEGERARRAYTYPES = 54
+        FID_SETDYNAMICTYPES = 56
+        FID_SETBOOLTYPES = 58
         FID_BROADCASTTEST = 39
 	}
 

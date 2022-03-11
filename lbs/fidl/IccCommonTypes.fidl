@@ -28,5 +28,5 @@ typeCollection IccCommonTypes {
 	}
 
     <** @description:Unique ID for a POI Categories**>
-    typedef Version is UInt8
+    typedef VersionNumber is UInt8
 }

@@ -139,15 +139,16 @@ TEST_F(TestTheTest, DeserializeSetEnumCommand_deserialize_OK) {
 TEST_F(TestTheTest, CreateSetIntegerTypesCommand_content_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 2 + 4 + 8;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
   uint64_t u64Var = 0x1234567887654321;
+  uint16_t length =
+      sizeof(u8Var) + sizeof(u16Var) + sizeof(u32Var) + sizeof(u64Var);
   test_command.setIntegerTypes_command_serialize(act, u8Var, u16Var, u32Var,
                                                  u64Var, stream);
   EXPECT_EQ(act, convertToU16(act_index));
-  EXPECT_EQ(length, stream[len_index]);
+  EXPECT_EQ(length, convertToU16(len_index));
   EXPECT_EQ(u8Var, stream[first_msg_index]);
   EXPECT_EQ(u16Var, convertToU16(first_msg_index + 1));
   EXPECT_EQ(u32Var, convertToU32(first_msg_index + 3));
@@ -157,7 +158,6 @@ TEST_F(TestTheTest, CreateSetIntegerTypesCommand_content_OK) {
 TEST_F(TestTheTest, CreateSetIntegerTypesCommand_getFid_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 4 + 8 + 16;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
@@ -170,7 +170,6 @@ TEST_F(TestTheTest, CreateSetIntegerTypesCommand_getFid_OK) {
 TEST_F(TestTheTest, DeserializeSetIntegerTypesCommand_deserialize_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 4 + 8 + 16;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
@@ -196,15 +195,16 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesCommand_deserialize_OK) {
 TEST_F(TestTheTest, CreateSetIntegerTypesResponse_content_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 2 + 4 + 8;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
   uint64_t u64Var = 0x1234567887654321;
+  uint16_t length =
+      sizeof(u8Var) + sizeof(u16Var) + sizeof(u32Var) + sizeof(u64Var);
   test_command.setIntegerTypes_response_serialize(act, u64Var, u32Var, u16Var,
                                                   u8Var, stream);
   EXPECT_EQ(act, convertToU16(act_index));
-  EXPECT_EQ(length, stream[len_index]);
+  EXPECT_EQ(length, convertToU16(len_index));
   EXPECT_EQ(u64Var, convertToU64(first_msg_index));
   EXPECT_EQ(u32Var, convertToU32(first_msg_index + 4));
   EXPECT_EQ(u16Var, convertToU16(first_msg_index + 6));
@@ -214,7 +214,6 @@ TEST_F(TestTheTest, CreateSetIntegerTypesResponse_content_OK) {
 TEST_F(TestTheTest, CreateSetIntegerTypesResponse_getFid_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 4 + 8 + 16;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
@@ -227,7 +226,6 @@ TEST_F(TestTheTest, CreateSetIntegerTypesResponse_getFid_OK) {
 TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
   test test_command;
   uint16_t act = 0xabba;
-  uint8_t length = 1 + 4 + 8 + 16;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
   uint32_t u32Var = 0x12345678;
@@ -248,6 +246,97 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
   EXPECT_EQ(u16Var, u16Var_r);
   EXPECT_EQ(u32Var, u32Var_r);
   EXPECT_EQ(u64Var, u64Var_r);
+}
+#endif
+
+#if 1  // setFloatingPointTypes
+TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_content_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  uint16_t length = sizeof(floatVar) + sizeof(doubleVar);
+  test_command.setFloatingPointTypes_command_serialize(act, floatVar, doubleVar,
+                                                       stream);
+  EXPECT_EQ(act, convertToU16(act_index));
+  EXPECT_EQ(length, convertToU16(len_index));
+  EXPECT_EQ(floatVar, stream[first_msg_index]);
+  EXPECT_EQ(doubleVar, convertToU16(first_msg_index + sizeof(floatVar)));
+}
+
+TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_getFid_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  test_command.setFloatingPointTypes_command_serialize(act, floatVar, doubleVar,
+                                                       stream);
+  EXPECT_EQ((uint8_t)FID::FID_SETFLOATINGPOINTTYPES,
+            test_command.getFid(stream));
+}
+
+TEST_F(TestTheTest, DeserializeSetFloatingPointTypesCommand_deserialize_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  test_command.setFloatingPointTypes_command_serialize(act, floatVar, doubleVar,
+                                                       stream);
+
+  uint16_t act_r = 0;
+  float floatVar_r = 1.2345;
+  double doubleVar_r = 9876.54321;
+  EXPECT_TRUE(test_command.setFloatingPointTypes_command_deserialize(
+      stream, act_r, floatVar_r, doubleVar_r));
+
+  EXPECT_EQ(act, act_r);
+  EXPECT_EQ(floatVar, floatVar_r);
+  EXPECT_EQ(doubleVar, doubleVar_r);
+}
+
+TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_content_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  uint16_t length = sizeof(floatVar) + sizeof(doubleVar);
+  test_command.setFloatingPointTypes_response_serialize(act, doubleVar,
+                                                        floatVar, stream);
+  EXPECT_EQ(act, convertToU16(act_index));
+  EXPECT_EQ(length, convertToU16(len_index));
+  EXPECT_EQ(doubleVar, stream[first_msg_index]);
+  EXPECT_EQ(floatVar, convertToU16(first_msg_index + sizeof(doubleVar)));
+}
+
+TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_getFid_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  test_command.setFloatingPointTypes_response_serialize(act, doubleVar,
+                                                        floatVar, stream);
+  EXPECT_EQ((uint8_t)FID::FID_SETFLOATINGPOINTTYPES + 1,
+            test_command.getFid(stream));
+}
+
+TEST_F(TestTheTest, DeserializeSetFloatingPointTypesResponse_deserialize_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  uint8_t u8Var = 0x12;
+  float floatVar = 1.2345;
+  double doubleVar = 98765.43210;
+  test_command.setFloatingPointTypes_response_serialize(act, doubleVar,
+                                                        floatVar, stream);
+
+  uint16_t act_r = 0;
+  float floatVar_r = 5.4321;
+  double doubleVar_r = 12345.67890;
+  EXPECT_TRUE(test_command.setFloatingPointTypes_response_deserialize(
+      stream, act_r, doubleVar_r, floatVar_r));
+
+  EXPECT_EQ(act, act_r);
+  EXPECT_EQ(doubleVar, doubleVar_r);
+  EXPECT_EQ(floatVar, floatVar_r);
 }
 #endif
 
