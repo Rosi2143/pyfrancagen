@@ -17,6 +17,8 @@ class TestTheTest : public ::testing::Test {
   uint64_t convertToU64(const uint8_t& index) {
     return (convertToU32(index)) + (((uint64_t)convertToU32(index + 4)) << 32);
   }
+  float convertToFloat(const uint8_t& index) { return (*(float*)&stream[index]); }
+  double convertToDouble(const uint8_t& index) { return (*(double*)&stream[index]); }
   std::vector<uint8_t> convertToU8Vector(const uint8_t& index,
                                          const uint8_t& length) {
     std::vector<uint8_t> output;
@@ -260,8 +262,8 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_content_OK) {
                                                        stream);
   EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, convertToU16(len_index));
-  EXPECT_EQ(floatVar, stream[first_msg_index]);
-  EXPECT_EQ(doubleVar, convertToU16(first_msg_index + sizeof(floatVar)));
+  EXPECT_EQ(floatVar, convertToFloat(first_msg_index));
+  EXPECT_EQ(doubleVar, convertToDouble(first_msg_index + sizeof(floatVar)));
 }
 
 TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_getFid_OK) {
@@ -304,8 +306,8 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_content_OK) {
                                                         floatVar, stream);
   EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, convertToU16(len_index));
-  EXPECT_EQ(doubleVar, stream[first_msg_index]);
-  EXPECT_EQ(floatVar, convertToU16(first_msg_index + sizeof(doubleVar)));
+  EXPECT_EQ(doubleVar, convertToDouble(first_msg_index));
+  EXPECT_EQ(floatVar, convertToFloat(first_msg_index + sizeof(doubleVar)));
 }
 
 TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_getFid_OK) {
