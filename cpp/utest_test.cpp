@@ -17,8 +17,12 @@ class TestTheTest : public ::testing::Test {
   uint64_t convertToU64(const uint8_t& index) {
     return (convertToU32(index)) + (((uint64_t)convertToU32(index + 4)) << 32);
   }
-  float convertToFloat(const uint8_t& index) { return (*(float*)&stream[index]); }
-  double convertToDouble(const uint8_t& index) { return (*(double*)&stream[index]); }
+  float convertToFloat(const uint8_t& index) {
+    return (*(float*)&stream[index]);
+  }
+  double convertToDouble(const uint8_t& index) {
+    return (*(double*)&stream[index]);
+  }
   std::vector<uint8_t> convertToU8Vector(const uint8_t& index,
                                          const uint8_t& length) {
     std::vector<uint8_t> output;
@@ -249,6 +253,57 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
   EXPECT_EQ(u32Var, u32Var_r);
   EXPECT_EQ(u64Var, u64Var_r);
 }
+#endif
+
+#if 1  // setStructTypes
+TEST_F(TestTheTest, CreateSetStructTypesCommand_content_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  TestStruct testStruct;
+  testStruct.u8TestVar = 0x12;
+  testStruct.u16TestVar = 0x3456;
+  testStruct.bTestBool = true;
+  testStruct.testEnum = TestEnum1::TESTENUM1_100;
+  uint16_t length = sizeof(testStruct);
+  test_command.setStruct_command_serialize(act, testStruct, stream);
+  EXPECT_EQ(act, convertToU16(act_index));
+  EXPECT_EQ(length, convertToU16(len_index));
+}
+
+TEST_F(TestTheTest, CreateSetStructTypesCommand_getFid_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  TestStruct testStruct;
+  testStruct.u8TestVar = 0x12;
+  testStruct.u16TestVar = 0x3456;
+  testStruct.bTestBool = true;
+  testStruct.testEnum = TestEnum1::TESTENUM1_100;
+  test_command.setStruct_command_serialize(act, testStruct, stream);
+  EXPECT_EQ((uint8_t)FID::FID_SETSTRUCT, test_command.getFid(stream));
+}
+
+TEST_F(TestTheTest, DeserializeSetStructTypesCommand_deserialize_OK) {
+  test test_command;
+  uint16_t act = 0xabba;
+  TestStruct testStruct;
+  testStruct.u8TestVar = 0x12;
+  testStruct.u16TestVar = 0x3456;
+  testStruct.bTestBool = true;
+  testStruct.testEnum = TestEnum1::TESTENUM1_100;
+  test_command.setStruct_command_serialize(act, testStruct, stream);
+
+  uint16_t act_r = 0;
+  TestStruct testStruct_r;
+  EXPECT_TRUE(
+      test_command.setStruct_command_deserialize(stream, act_r, testStruct_r));
+
+  EXPECT_EQ(act, act_r);
+  EXPECT_EQ(testStruct.u8TestVar, testStruct_r.u8TestVar);
+  EXPECT_EQ(testStruct.u16TestVar, testStruct_r.u16TestVar);
+  EXPECT_EQ(testStruct.bTestBool, testStruct_r.bTestBool);
+  EXPECT_EQ(testStruct.testEnum, testStruct_r.testEnum);
+}
+
 #endif
 
 #if 1  // setFloatingPointTypes

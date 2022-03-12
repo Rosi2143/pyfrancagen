@@ -59,6 +59,17 @@ interface test {
 		}
 	}
 
+	<** @description: set struct types of fix types **>
+	method setStruct {
+		in {
+			<** @description: test all integer types **>
+			TestStruct testStruct
+ 		}
+		out {
+			TestStruct testStruct
+		}
+	}
+
 	<** @description: set standard floating point types **>
 	method setFloatingPointTypes {
 		in {
@@ -136,9 +147,10 @@ interface test {
         FID_DEREGISTER = 34
         FID_SETENUM = 48
         FID_SETINTEGERTYPES = 50
-        FID_SETFLOATINGPOINTTYPES = 52
-        FID_SETINTEGERARRAYTYPES = 54
-        FID_SETDYNAMICTYPES = 56
+		  FID_SETSTRUCT = 52
+        FID_SETFLOATINGPOINTTYPES = 54
+        FID_SETINTEGERARRAYTYPES = 56
+        FID_SETDYNAMICTYPES = 58
         FID_SETBOOLTYPES = 58
         FID_BROADCASTTEST = 39
 	}
@@ -166,4 +178,11 @@ interface test {
 		BASEENUM_3
 	}
 
+	<** @description: test a struct of fix size **>
+	struct TestStruct {
+		UInt8 u8TestVar
+		UInt16 u16TestVar
+		Boolean bTestBool
+		TestEnum1 testEnum
+	}
 }

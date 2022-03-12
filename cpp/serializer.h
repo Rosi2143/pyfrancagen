@@ -26,7 +26,7 @@ class serializer {
   std::vector<uint8_t> pop_front(const std::vector<uint8_t>& obj, uint16_t& parameterLength);
   template <typename T>
   T pop_front(const T& obj, uint16_t& parameterLength) {
-    T ret = (T)0;
+    T ret;
     try {
       ret = deserialize<T>();
       strip_buffer(obj);
