@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/lbs/src_gen"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

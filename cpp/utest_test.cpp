@@ -59,47 +59,41 @@ class TestTheTest : public ::testing::Test {
 #if 1  // register
 TEST_F(TestTheTest, CreateRegisterCommand_content_OK) {
   test test_command;
-  uint8_t MajorVersion = 1;
-  uint8_t MinorVersion = 2;
+  Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
-  uint8_t length = 2;
-  test_command.register_command_serialize(act, MajorVersion, MinorVersion,
-                                          stream);
+  uint8_t length = 3;
+  test_command.register_command_serialize(act, version, stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, stream[fid_index]);
   EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, stream[len_index]);
-  EXPECT_EQ(MajorVersion, stream[first_msg_index]);
-  EXPECT_EQ(MinorVersion, stream[first_msg_index + 1]);
+  EXPECT_EQ(version.versionMajor, stream[first_msg_index]);
+  EXPECT_EQ(version.versionMinor, stream[first_msg_index + 1]);
+  EXPECT_EQ(version.versionMicro, stream[first_msg_index + 2]);
 }
 
 TEST_F(TestTheTest, CreateRegisterCommand_getFid_OK) {
   test test_command;
-  uint8_t MajorVersion = 1;
-  uint8_t MinorVersion = 2;
+  Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
-  uint8_t length = 2;
-  test_command.register_command_serialize(act, MajorVersion, MinorVersion,
-                                          stream);
+  test_command.register_command_serialize(act, version, stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, test_command.getFid(stream));
 }
 
 TEST_F(TestTheTest, DeserializeRegisterCommand_deserialize_OK) {
   test test_command;
-  uint8_t MajorVersion = 1;
-  uint8_t MinorVersion = 2;
+  Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
-  test_command.register_command_serialize(act, MajorVersion, MinorVersion,
-                                          stream);
+  test_command.register_command_serialize(act, version, stream);
 
-  uint8_t MajorVersion_r = 0;
-  uint8_t MinorVersion_r = 0;
+  Version version_r = { .versionMajor=9, .versionMinor=8, .versionMicro=7};
   uint16_t act_r = 0;
-  EXPECT_TRUE(test_command.register_command_deserialize(
-      stream, act_r, MajorVersion_r, MinorVersion_r));
+  EXPECT_TRUE(
+      test_command.register_command_deserialize(stream, act_r, version_r));
 
   EXPECT_EQ(act, act_r);
-  EXPECT_EQ(MajorVersion, MajorVersion_r);
-  EXPECT_EQ(MinorVersion, MinorVersion_r);
+  EXPECT_EQ(version.versionMajor, version_r.versionMajor);
+  EXPECT_EQ(version.versionMinor, version_r.versionMinor);
+  EXPECT_EQ(version.versionMicro, version_r.versionMicro);
 }
 #endif
 

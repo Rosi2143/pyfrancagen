@@ -13,16 +13,12 @@ interface test {
 	<** @description: register client and check version info. **>
 	method register {
 		in {
-			<** @description: major version of client interface implementation **>
-			VersionNumber majorClientVersion
-			<** @description: minor version of client interface implementation **>
-			VersionNumber minorClientVersion
+			<** @description: version of the client  interface implementation **>
+			Version clientVersion
 		}
 		out {
-			<** @description: major version of server interface implementation **>
-			VersionNumber majorServerVersion
-			<** @description: minor version of server interface implementation **>
-			VersionNumber minorServerVersion
+			<** @description: version of the server interface implementation **>
+			Version ServerVersion
 		}
 	}
 

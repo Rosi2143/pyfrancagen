@@ -11,6 +11,16 @@ typeCollection IccCommonTypes {
 		minor 0
 	}
 
+	<** @description: version: used for the register methods**>
+	struct Version {
+		<** @description: when the major changes, then backward compatibility with previous releases is not granted.**>
+		UInt8 versionMajor
+	<** @description: when the minor changes, then backward compatibility with previous releases is granted, but something changed in the implementation of the API (e.g. new methods may have been added).**>
+		UInt8 versionMinor
+		<** @description: when the micro changes, then backward compatibility with previous releases is granted (bug fixes or documentation modifications).**>
+		UInt8 versionMicro
+	}
+
 	<** @description: command response errors **>
 	enumeration GenericCommandErrors {
 		<** @description: No Error **>
