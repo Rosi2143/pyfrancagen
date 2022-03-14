@@ -18,7 +18,7 @@ interface test {
 		}
 		out {
 			<** @description: version of the server interface implementation **>
-			Version ServerVersion
+			Version serverVersion
 		}
 	}
 
