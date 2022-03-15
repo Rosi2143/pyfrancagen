@@ -16,3 +16,4 @@ DartConfiguration.tcl
 build/
 
 lbs/fidl/avb_audio.fidl
+lbs/fidl/avb_trace.fidl

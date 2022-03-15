@@ -7,8 +7,8 @@ import org.bosch.xc.civic.icc.IccCommonTypes.* from "IccCommonTypes.fidl"
 									check Franca User Guide: https://drive.google.com/drive/folders/0B7JseVbR6jvhUnhLOUM5ZGxOOG8?resourcekey=0-U-X53hicOvlqAZCG86dCUQ
 **>
 
-interface test {
-	version { major 1 minor 2 }
+interface avb_test {
+	version { major 1 minor 1 }
 
 	<** @description: register client and check version info. **>
 	method register {

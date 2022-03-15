@@ -1,6 +1,6 @@
 #include <vector>
 
-#include "audio.h"
+#include "avb_audio.h"
 #include "gtest/gtest.h"
 
 class AudioTest : public ::testing::Test {
@@ -14,7 +14,7 @@ class AudioTest : public ::testing::Test {
     return (convertToU16(index)) + (((uint32_t)convertToU16(index + 2)) << 16);
   }
   uint64_t convertToU64(const uint8_t& index) {
-    return (convertToU32(index)) + (((uint64_t)convertToU16(index + 4)) << 32);
+    return (convertToU32(index)) + (((uint64_t)convertToU32(index + 4)) << 32);
   }
   std::vector<uint8_t> stream;
   const uint8_t fid_index = 0;
@@ -25,7 +25,7 @@ class AudioTest : public ::testing::Test {
 
 // register
 TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   uint16_t length = 2;
@@ -39,7 +39,7 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
 }
 
 TEST_F(AudioTest, CreateRegisterCommand_getFid_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   aud_command.register_command_serialize(act, version, stream);
@@ -47,7 +47,7 @@ TEST_F(AudioTest, CreateRegisterCommand_getFid_OK) {
 }
 
 TEST_F(AudioTest, DeserializeRegisterCommand_deserialize_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   aud_command.register_command_serialize(act, version, stream);
@@ -63,7 +63,7 @@ TEST_F(AudioTest, DeserializeRegisterCommand_deserialize_OK) {
 }
 
 TEST_F(AudioTest, CreateRegisterResponse_content_OK) {
-  audio aud_response;
+  avb_audio aud_response;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   uint16_t length = 2;
@@ -77,7 +77,7 @@ TEST_F(AudioTest, CreateRegisterResponse_content_OK) {
 }
 
 TEST_F(AudioTest, CreateRegisterResponse_getFid_OK) {
-  audio aud_response;
+  avb_audio aud_response;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   aud_response.register_response_serialize(act, version, stream);
@@ -85,7 +85,7 @@ TEST_F(AudioTest, CreateRegisterResponse_getFid_OK) {
 }
 
 TEST_F(AudioTest, DeserializeRegisterResponse_deserialize_OK) {
-  audio aud_response;
+  avb_audio aud_response;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
   aud_response.register_response_serialize(act, version, stream);
@@ -102,7 +102,7 @@ TEST_F(AudioTest, DeserializeRegisterResponse_deserialize_OK) {
 
 // setStreamState
 TEST_F(AudioTest, CreateSetStreamStateCommand_content_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   StreamId streamId = StreamId::CIVIC_INFOTAINMENT_STREAM;
   Operation operation = Operation::OP_START;
   uint16_t act = 0x1234;
@@ -117,7 +117,7 @@ TEST_F(AudioTest, CreateSetStreamStateCommand_content_OK) {
 }
 
 TEST_F(AudioTest, CreateSetStreamStateCommand_getFid_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   StreamId streamId = StreamId::CIVIC_INFOTAINMENT_STREAM;
   Operation operation = Operation::OP_START;
   uint16_t act = 0x1234;
@@ -128,7 +128,7 @@ TEST_F(AudioTest, CreateSetStreamStateCommand_getFid_OK) {
 }
 
 TEST_F(AudioTest, DeserializeSetStreamStateCommand_deserialize_OK) {
-  audio aud_command;
+  avb_audio aud_command;
   StreamId streamId = StreamId::CIVIC_INFOTAINMENT_STREAM;
   Operation operation = Operation::OP_START;
   uint16_t act = 0x1234;

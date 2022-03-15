@@ -40,11 +40,14 @@ target_link_libraries(audio_avb iccserializerlib)
 add_executable(test_avb ./cpp/main_test.cpp)
 target_link_libraries(test_avb iccserializerlib)
 
-add_executable(audio_avb_test ./cpp/utest_audio.cpp)
-target_link_libraries(audio_avb_test gtest gtest_main pthread iccserializerlib)
+add_executable(test_avb_audio ./cpp/utest_audio.cpp)
+target_link_libraries(test_avb_audio gtest gtest_main pthread iccserializerlib)
 
 add_executable(test_avb_test ./cpp/utest_test.cpp)
 target_link_libraries(test_avb_test gtest gtest_main pthread iccserializerlib)
+
+add_executable(test_avb_trace ./cpp/utest_trace.cpp)
+target_link_libraries(test_avb_trace gtest gtest_main pthread iccserializerlib)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

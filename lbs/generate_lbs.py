@@ -10,7 +10,8 @@ LOCALINPUTDIR = '../lbs/fidl'
 
 FIDL_FILES =  [ '%s/%s' % (LOCALINPUTDIR,s) for s in [
     'avb_audio.fidl',
-    'avb_test.fidl' ] ]
+    'avb_test.fidl',
+    'avb_trace.fidl' ] ]
 
 def main():
     for f in FIDL_FILES:

@@ -1,5 +1,5 @@
 //#include <serialzer.h>
-#include <audio.h>
+#include <avb_audio.h>
 
 #include <iostream>
 
@@ -20,12 +20,12 @@ int main() {
   vector<uint8_t> stream_r;
   vector<uint8_t> stream_b;
 
-  audio aud_command_send;
-  audio aud_command_receive;
-  audio aud_response_send;
-  audio aud_response_receive;
-  audio aud_broadcast_send;
-  audio aud_broadcast_receive;
+  avb_audio aud_command_send;
+  avb_audio aud_command_receive;
+  avb_audio aud_response_send;
+  avb_audio aud_response_receive;
+  avb_audio aud_broadcast_send;
+  avb_audio aud_broadcast_receive;
 
   Version version_c = {.versionMajor = 1, .versionMinor = 2, .versionMicro = 3};
   uint16_t act_c = 0x1234;

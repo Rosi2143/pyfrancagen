@@ -10,12 +10,13 @@
             "-I${fileDirname}",
             "-I${workspaceFolder}/cpp",
             "-I${workspaceFolder}/lbs/src_gen",
+            "-I${workspaceFolder}/lbs/src",
             "-g",
             "${workspaceFolder}/cpp/main_test.cpp",
-            "${workspaceFolder}/lbs/src_gen/test.cpp",
-            "${workspaceFolder}/cpp/serializer.cpp",
+            "${workspaceFolder}/lbs/src_gen/avb_test.cpp",
+            "${workspaceFolder}/lbs/src/serializer.cpp",
             "-o",
-            "${workspaceFolder}/cpp/serializer"
+            "${workspaceFolder}/build/test_avb"
          ],
          "options": {
             "cwd": "${fileDirname}"
@@ -38,15 +39,16 @@
             "-I${fileDirname}",
             "-I${workspaceFolder}/cpp",
             "-I${workspaceFolder}/lbs/src_gen",
+            "-I${workspaceFolder}/lbs/src",
             "-g",
-            "${workspaceFolder}/cpp/utest_test.cpp",
-            "${workspaceFolder}/lbs/src_gen/test.cpp",
-            "${workspaceFolder}/cpp/serializer.cpp",
+            "${workspaceFolder}/cpp/utest_trace.cpp",
+            "${workspaceFolder}/lbs/src_gen/avb_trace.cpp",
+            "${workspaceFolder}/lbs/src/serializer.cpp",
             "-lgtest",
             "-lgtest_main",
             "-lpthread",
             "-o",
-            "${workspaceFolder}/cpp/utest_test"
+            "${workspaceFolder}/build/test_avb_trace"
          ],
          "options": {
             "cwd": "${fileDirname}"

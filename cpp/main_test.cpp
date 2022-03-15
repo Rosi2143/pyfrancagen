@@ -1,5 +1,5 @@
 //#include <serialzer.h>
-#include <test.h>
+#include <avb_test.h>
 
 #include <iostream>
 
@@ -19,10 +19,10 @@ int main() {
   vector<uint8_t> stream_c;
   vector<uint8_t> stream_r;
 
-  test test_command_send;
-  test test_command_receive;
-  test test_response_send;
-  test test_response_receive;
+  avb_test test_command_send;
+  avb_test test_command_receive;
+  avb_test test_response_send;
+  avb_test test_response_receive;
 
   Version version_c = {.versionMajor = 1, .versionMinor = 2, .versionMicro = 3};
   uint16_t act_c = 0x1234;

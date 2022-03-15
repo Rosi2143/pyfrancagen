@@ -2,7 +2,7 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "test.h"
+#include "avb_test.h"
 
 class TestTheTest : public ::testing::Test {
  protected:
@@ -58,7 +58,7 @@ class TestTheTest : public ::testing::Test {
 
 #if 1  // register
 TEST_F(TestTheTest, CreateRegisterCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
   uint8_t length = 3;
@@ -72,7 +72,7 @@ TEST_F(TestTheTest, CreateRegisterCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateRegisterCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
   test_command.register_command_serialize(act, version, stream);
@@ -80,7 +80,7 @@ TEST_F(TestTheTest, CreateRegisterCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeRegisterCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   Version version = { .versionMajor=1, .versionMinor=2, .versionMicro=3};
   uint16_t act = 0x1234;
   test_command.register_command_serialize(act, version, stream);
@@ -99,7 +99,7 @@ TEST_F(TestTheTest, DeserializeRegisterCommand_deserialize_OK) {
 
 #if 1  // setEnum
 TEST_F(TestTheTest, CreateSetEnumCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   TestEnum1 testEnum = TestEnum1::TESTENUM1_10;
   uint16_t act = 0x1234;
   uint8_t length = 4;
@@ -111,7 +111,7 @@ TEST_F(TestTheTest, CreateSetEnumCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetEnumCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   TestEnum1 testEnum = TestEnum1::TESTENUM1_10;
   uint16_t act = 0x1234;
   uint8_t length = 2;
@@ -120,7 +120,7 @@ TEST_F(TestTheTest, CreateSetEnumCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetEnumCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   TestEnum1 testEnum = TestEnum1::TESTENUM1_10;
   uint16_t act = 0x1234;
   test_command.setEnum_command_serialize(act, testEnum, stream);
@@ -137,7 +137,7 @@ TEST_F(TestTheTest, DeserializeSetEnumCommand_deserialize_OK) {
 
 #if 1  // setIntegerTypes
 TEST_F(TestTheTest, CreateSetIntegerTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -156,7 +156,7 @@ TEST_F(TestTheTest, CreateSetIntegerTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -168,7 +168,7 @@ TEST_F(TestTheTest, CreateSetIntegerTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -193,7 +193,7 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesCommand_deserialize_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerTypesResponse_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -212,7 +212,7 @@ TEST_F(TestTheTest, CreateSetIntegerTypesResponse_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerTypesResponse_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -224,7 +224,7 @@ TEST_F(TestTheTest, CreateSetIntegerTypesResponse_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   uint16_t u16Var = 0x1234;
@@ -251,7 +251,7 @@ TEST_F(TestTheTest, DeserializeSetIntegerTypesResponse_deserialize_OK) {
 
 #if 1  // setStructTypes
 TEST_F(TestTheTest, CreateSetStructTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   TestStruct testStruct;
   testStruct.u8TestVar = 0x12;
@@ -265,7 +265,7 @@ TEST_F(TestTheTest, CreateSetStructTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetStructTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   TestStruct testStruct;
   testStruct.u8TestVar = 0x12;
@@ -277,7 +277,7 @@ TEST_F(TestTheTest, CreateSetStructTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetStructTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   TestStruct testStruct;
   testStruct.u8TestVar = 0x12;
@@ -302,7 +302,7 @@ TEST_F(TestTheTest, DeserializeSetStructTypesCommand_deserialize_OK) {
 
 #if 1  // setFloatingPointTypes
 TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   float floatVar = 1.2345;
   double doubleVar = 98765.43210;
@@ -316,7 +316,7 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   float floatVar = 1.2345;
   double doubleVar = 98765.43210;
@@ -327,7 +327,7 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetFloatingPointTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   float floatVar = 1.2345;
   double doubleVar = 98765.43210;
@@ -346,7 +346,7 @@ TEST_F(TestTheTest, DeserializeSetFloatingPointTypesCommand_deserialize_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   float floatVar = 1.2345;
   double doubleVar = 98765.43210;
@@ -360,7 +360,7 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   float floatVar = 1.2345;
   double doubleVar = 98765.43210;
@@ -371,7 +371,7 @@ TEST_F(TestTheTest, CreateSetFloatingPointTypesResponse_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetFloatingPointTypesResponse_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xabba;
   uint8_t u8Var = 0x12;
   float floatVar = 1.2345;
@@ -393,7 +393,7 @@ TEST_F(TestTheTest, DeserializeSetFloatingPointTypesResponse_deserialize_OK) {
 
 #if 1  // setIntegerArrayTypes
 TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = 0xFF;
@@ -409,7 +409,7 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = 0xCC;
@@ -420,7 +420,7 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = 0xFF;
@@ -439,7 +439,7 @@ TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesCommand_deserialize_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = 0xAA;
@@ -455,7 +455,7 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = 0xBB;
@@ -466,7 +466,7 @@ TEST_F(TestTheTest, CreateSetIntegerArrayTypesResponse_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesResponse_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::vector<uint8_t> testVector{'H', 'a', 'l', 'l', 'o'};
   uint8_t u8Var = testVector.size();
@@ -487,7 +487,7 @@ TEST_F(TestTheTest, DeserializeSetIntegerArrayTypesResponse_deserialize_OK) {
 
 #if 1  // setDynamicTypes
 TEST_F(TestTheTest, CreateSetDynamicTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::string TestString("Hallo you");
   uint16_t u8StringLength = TestString.size();
@@ -503,7 +503,7 @@ TEST_F(TestTheTest, CreateSetDynamicTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetDynamicTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::string TestString("Hallo you");
   uint8_t u8StringLength = TestString.size();
@@ -515,7 +515,7 @@ TEST_F(TestTheTest, CreateSetDynamicTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetDynamicTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   std::string TestString("Hallo you");
   uint16_t u8StringLength = TestString.size();
@@ -536,7 +536,7 @@ TEST_F(TestTheTest, DeserializeSetDynamicTypesCommand_deserialize_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetDynamicTypesResponse_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   uint32_t u32TestVar = 0x10101010;
   ByteBuffer testBuffer{'H', 'a', 'l', 'l', 'i', 'H', 'a', 'l', 'l', 'o'};
@@ -554,7 +554,7 @@ TEST_F(TestTheTest, CreateSetDynamicTypesResponse_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetDynamicTypesResponse_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   ByteBuffer testBuffer{'H', 'a', 'l', 'l', 'i', 'H', 'a', 'l', 'l', 'o'};
   uint32_t u32TestVar = 0x09900990;
@@ -565,7 +565,7 @@ TEST_F(TestTheTest, CreateSetDynamicTypesResponse_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetDynamicTypesResponse_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xDCBA;
   ByteBuffer testBuffer{'H', 'a', 'l', 'l', 'i', 'H', 'a', 'l', 'l', 'o'};
   uint32_t u32TestVar = 0x09900990;
@@ -588,7 +588,7 @@ TEST_F(TestTheTest, DeserializeSetDynamicTypesResponse_deserialize_OK) {
 
 #if 1  // setBoolTypes
 TEST_F(TestTheTest, CreateSetBoolTypesCommand_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
@@ -599,7 +599,7 @@ TEST_F(TestTheTest, CreateSetBoolTypesCommand_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetBoolTypesCommand_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
@@ -608,7 +608,7 @@ TEST_F(TestTheTest, CreateSetBoolTypesCommand_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetBoolTypesCommand_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
@@ -624,7 +624,7 @@ TEST_F(TestTheTest, DeserializeSetBoolTypesCommand_deserialize_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetBoolTypesResponse_content_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
@@ -635,7 +635,7 @@ TEST_F(TestTheTest, CreateSetBoolTypesResponse_content_OK) {
 }
 
 TEST_F(TestTheTest, CreateSetBoolTypesResponse_getFid_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
@@ -644,7 +644,7 @@ TEST_F(TestTheTest, CreateSetBoolTypesResponse_getFid_OK) {
 }
 
 TEST_F(TestTheTest, DeserializeSetBoolTypesResponse_deserialize_OK) {
-  test test_command;
+  avb_test test_command;
   uint16_t act = 0xb001;
   uint8_t length = 1;
   bool boolVar = true;
