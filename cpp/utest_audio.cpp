@@ -28,7 +28,7 @@ TEST_F(AudioTest, CreateRegisterCommand_content_OK) {
   avb_audio aud_command;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
-  uint16_t length = 2;
+  uint16_t length = 3;
   aud_command.register_command_serialize(act, version, stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER, stream[fid_index]);
   EXPECT_EQ(act, convertToU16(act_index));
@@ -66,7 +66,7 @@ TEST_F(AudioTest, CreateRegisterResponse_content_OK) {
   avb_audio aud_response;
   Version version = {1, 2, 3};
   uint16_t act = 0x1234;
-  uint16_t length = 2;
+  uint16_t length = 3;
   aud_response.register_response_serialize(act, version, stream);
   EXPECT_EQ((uint8_t)FID::FID_REGISTER + 1, stream[fid_index]);
   EXPECT_EQ(act, convertToU16(act_index));
