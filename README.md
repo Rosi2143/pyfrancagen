@@ -60,13 +60,13 @@ $ git submodule update --init
 ```
 ## docker
 ```bash
-$ ./gradleDocker.sh --image="icc_generator" --run="cd lbs && ./generate_lbs.py"
+$ ./gradleDocker.sh --image="icc_generator" --run="cd icc && ./generate_icc.py"
 ```
 
 ## manual
 ```bash
-$ cd lbs
-$ ./generate_lbs.py
+$ cd icc
+$ ./generate_icc.py
 ```
 Check results in **src_gen/**
 

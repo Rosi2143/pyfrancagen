@@ -5,12 +5,12 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
 
-set(ICC_Generared_Source "./lbs/src_gen/")
+set(ICC_Generared_Source "./icc/src_gen/")
 
 add_custom_command(
   COMMENT "Generate ICC code"
   OUTPUT ${ICC_Generared_Source}audio.h ${ICC_Generared_Source}audio.cpp ${ICC_Generared_Source}test.h ${ICC_Generared_Source}test.cpp
-  COMMAND /bin/bash ./gradleDocker.sh --image=icc_generator --run="\"python3 ./generate_lbs.py\""
+  COMMAND /bin/bash ./gradleDocker.sh --image=icc_generator --run="\"python3 ./generate_icc.py\""
   WORKING_DIRECTORY .
   VERBATIM
 )
@@ -19,13 +19,13 @@ include(CTest)
 enable_testing()
 
 include_directories(${ICC_Generared_Source}/ ./cpp)
-include_directories(${ICC_Generared_Source}/ ./lbs/src)
+include_directories(${ICC_Generared_Source}/ ./icc/src)
 
 # iccserializer library
 project(iccserializerlib VERSION 1.0.1 DESCRIPTION "serializes and deserializes ICC messages")
 file(GLOB iccserializerlib_SRC
     CONFIGURE_DEPENDS
-    ./lbs/src/serializer.cpp
+    ./icc/src/serializer.cpp
     ${ICC_Generared_Source}*.cpp
     ${ICC_Generared_Source}*.h
 )

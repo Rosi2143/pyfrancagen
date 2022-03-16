@@ -7,7 +7,7 @@ docker_image=
 version=1.0
 dry_run=false
 verbose=false
-buildCommand="python3 ./generate_lbs.py"
+buildCommand="python3 ./generate_icc.py"
 do_check=false
 do_build=false
 mappedWorkDirectory="/home/ubuntu/work"
@@ -84,7 +84,7 @@ command="docker run ${name} ${rm} --user ${uid}:${gid} --privileged ${interactiv
    -e API_KEY=${API_KEY} \
    ${sshDockerOptions} \
    ${docker_image_url} \
-   /bin/bash -l -c \"cd ${mappedWorkDirectory}/lbs && $buildCommand $thinned_out_parameters\""
+   /bin/bash -l -c \"cd ${mappedWorkDirectory}/icc && $buildCommand $thinned_out_parameters\""
 #echo ${timezone} > /etc/timezone &&
 
 if [ $verbose == true ]; then

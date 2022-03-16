@@ -4,8 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/lbs/src_gen",
-                "${workspaceFolder}/lbs/src"
+                "${workspaceFolder}/icc/src_gen",
+                "${workspaceFolder}/icc/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
