@@ -112,51 +112,48 @@ TEST_F(TraceTest, DeserializeRegisterResponse_deserialize_OK) {
 #if 1  // setStreamState
 TEST_F(TraceTest, CreateSendTraceBroadcast_content_OK) {
   avb_trace trace_command;
-  TraceID traceId = 0x1234;
   TraceContext traceContext = 0x9080706050403020;
   std::string traceMessage = "Trace Testmessage";
   uint16_t act = 0xABCD;
-  uint16_t length = sizeof(traceId) + sizeof(traceContext) + traceMessage.size() + 2;
-  trace_command.sendTrace_broadcast_serialize(act, traceId, traceContext,
-                                               traceMessage, stream);
+  uint16_t length = sizeof(traceContext) + traceMessage.size() + 2;
+  trace_command.sendTrace_broadcast_serialize(act, traceContext, traceMessage,
+                                              stream);
   EXPECT_EQ((uint8_t)FID::FID_SENDTRACE + 1, stream[fid_index]);
   EXPECT_EQ(act, convertToU16(act_index));
   EXPECT_EQ(length, convertToU16(len_index));
-  EXPECT_EQ(traceId, convertToU16(first_msg_index));
-  EXPECT_EQ(traceContext, convertToU64(first_msg_index + sizeof(traceId)));
-  EXPECT_EQ(traceMessage.size(), convertToU16(first_msg_index + sizeof(traceId) + sizeof(traceContext)));
-  EXPECT_TRUE(traceMessage == convertToString(first_msg_index + sizeof(traceId) + sizeof(traceContext) + 2, traceMessage.size()));
+  EXPECT_EQ(traceContext, convertToU64(first_msg_index));
+  EXPECT_EQ(traceMessage.size(),
+            convertToU16(first_msg_index + sizeof(traceContext)));
+  EXPECT_TRUE(traceMessage ==
+              convertToString(first_msg_index + sizeof(traceContext) + 2,
+                              traceMessage.size()));
 }
 
 TEST_F(TraceTest, CreateSendTraceBroadcast_getFid_OK) {
   avb_trace trace_command;
-  TraceID traceId = 0x1234;
   TraceContext traceContext = 0x9080706050403020;
   std::string traceMessage = "Trace Testmessage";
   uint16_t act = 0xABCD;
-  trace_command.sendTrace_broadcast_serialize(act, traceId, traceContext,
-                                               traceMessage, stream);
+  trace_command.sendTrace_broadcast_serialize(act, traceContext, traceMessage,
+                                              stream);
   EXPECT_EQ((uint8_t)FID::FID_SENDTRACE + 1, trace_command.getFid(stream));
 }
 
 TEST_F(TraceTest, DeserializeSendTraceBroadcast_deserialize_OK) {
   avb_trace trace_command;
-  TraceID traceId = 0x1234;
   TraceContext traceContext = 0x9080706050403020;
   std::string traceMessage = "Trace Testmessage";
   uint16_t act = 0xABCD;
-  trace_command.sendTrace_broadcast_serialize(act, traceId, traceContext,
-                                               traceMessage, stream);
+  trace_command.sendTrace_broadcast_serialize(act, traceContext, traceMessage,
+                                              stream);
 
-  TraceID traceId_r = 0;
   TraceContext traceContext_r = 0;
   std::string traceMessage_r = "";
   uint16_t act_r = 0;
-  trace_command.sendTrace_broadcast_deserialize(stream, act_r, traceId_r,
-                                                 traceContext_r, traceMessage_r);
+  trace_command.sendTrace_broadcast_deserialize(stream, act_r, traceContext_r,
+                                                traceMessage_r);
 
   EXPECT_EQ(act, act_r);
-  EXPECT_EQ(traceId, traceId_r);
   EXPECT_EQ(traceContext, traceContext_r);
   EXPECT_EQ(traceMessage, traceMessage_r);
 }
