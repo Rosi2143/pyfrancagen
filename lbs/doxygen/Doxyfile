@@ -1,5 +1,5 @@
-PROJECT_NAME = "LBS C++ binding"
-PROJECT_BRIEF = "Experimental automated C++ generation from LBS APIs defined in Franca IDL"
+PROJECT_NAME = "ICC C++ binding"
+PROJECT_BRIEF = "Experimental automated C++ generation from ICC APIs defined in Franca IDL"
 
 # XML used if moxygen is used to generate markdown from Doxygen
 GENERATE_XML=YES
@@ -11,3 +11,6 @@ HTML_EXTRA_STYLESHEET="./doxystyle.css"
 HTML_COLORSTYLE_HUE=185
 
 HTML_FOOTER=footer.html
+
+# input files
+INPUT=../src ../src_gen
