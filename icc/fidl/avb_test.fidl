@@ -85,21 +85,8 @@ interface avb_test {
 			<** @description: test all arrays of integer types **>
 			UInt8 uint8Data
 			UInt8[] uint8Array
-<**			UInt8 uint16ArrayLength
-			UInt16[] uint16Array			-- not yet supported
-			UInt8 uint32ArrayLength
-			UInt32[] uint32Array      -- not yet supported
-			UInt8 uint64ArrayLength
-			UInt64[] uint64Array      -- not yet supported**>
 		}
 		out {
-<**			UInt8 uint8Data
-			UInt64[] uint64Array			-- not yet supported
-			UInt8 uint32ArrayLength
-			UInt32[] uint32Array			-- not yet supported
-			UInt8 uint16ArrayLength
-			UInt16[] uint16Array			-- not yet supported
-			UInt8 uint8ArrayLength		**>
 			UInt8[] uint8Array
 			UInt8 uint8Data
 		}
