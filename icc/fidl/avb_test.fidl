@@ -8,17 +8,17 @@ import org.bosch.xc.civic.icc.IccCommonTypes.* from "IccCommonTypes.fidl"
 **>
 
 interface avb_test {
-	version { major 1 minor 1 }
+	version { major 1 minor 2 }
 
 	<** @description: register client and check version info. **>
 	method register {
 		in {
-			<** @description: version of the client  interface implementation **>
-			Version clientVersion
+			<** @description: version of client interface implementation **>
+			Version ClientVersion
 		}
 		out {
-			<** @description: version of the server interface implementation **>
-			Version serverVersion
+			<** @description: version of server interface implementation **>
+			Version ServerVersion
 		}
 	}
 
@@ -119,30 +119,44 @@ interface avb_test {
 	<** @description: test broadcasts **>
 	broadcast broadcastTest {
 		out {
+			// error variable for testing broadcasts
 			UInt32 errVar
 		}
 	}
 
+	<** @description: enumeration to define the function ID's
+										Naming: FID_<method/broadcast name> **>
 	enumeration FID {
-	    <** @description: enumeration to define the function ID's
-												Naming: FID_<method/broadcast name> **>
-        FID_REGISTER = 32
-        FID_DEREGISTER = 34
-        FID_SETENUM = 48
-        FID_SETINTEGERTYPES = 50
-		  FID_SETSTRUCT = 52
-        FID_SETFLOATINGPOINTTYPES = 54
-        FID_SETINTEGERARRAYTYPES = 56
-        FID_SETDYNAMICTYPES = 58
-        FID_SETBOOLTYPES = 58
-        FID_BROADCASTTEST = 39
+		<**	@description: FID for method register **>
+			FID_REGISTER = 32
+		<**	@description: FID for method deregister **>
+			FID_DEREGISTER = 34
+		<**	@description: FID for method setEnum **>
+			FID_SETENUM = 48
+		<**	@description: FID for method setIntegerTypes **>
+			FID_SETINTEGERTYPES = 50
+		<**	@description: FID for method setStruct **>
+			FID_SETSTRUCT = 52
+		<**	@description: FID for method setFloatingpointTypes **>
+			FID_SETFLOATINGPOINTTYPES = 54
+		<**	@description: FID for method setIntegerArrayTpes **>
+			FID_SETINTEGERARRAYTYPES = 56
+		<**	@description: FID for method setDynamicTypes **>
+			FID_SETDYNAMICTYPES = 58
+		<**	@description: FID for method setBoolTypes **>
+			FID_SETBOOLTYPES = 58
+		<**	@description: FID for broadcase test **>
+			FID_BROADCASTTEST = 39
 	}
 
-	<** @description: test an enum **>
 	enumeration TestEnum1 {
+		<**	@description: testing enumerations value default value = 0 **>
 		TESTENUM1_0
+		<**	@description:testing enumerations value consequitive value **>
 		TESTENUM1_1
+		<**	@description:testing enumerations value with set value = 10 **>
 		TESTENUM1_10 = 10
+		<**	@description:testing enumerations value with set value = 100 **>
 		TESTENUM1_100 = 100
 	}
 

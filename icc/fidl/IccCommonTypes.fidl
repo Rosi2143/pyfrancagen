@@ -14,11 +14,11 @@ typeCollection IccCommonTypes {
 	<** @description: version: used for the register methods**>
 	struct Version {
 		<** @description: when the major changes, then backward compatibility with previous releases is not granted.**>
-		UInt8 versionMajor
+		VersionNumber versionMajor
 	<** @description: when the minor changes, then backward compatibility with previous releases is granted, but something changed in the implementation of the API (e.g. new methods may have been added).**>
-		UInt8 versionMinor
+		VersionNumber versionMinor
 		<** @description: when the micro changes, then backward compatibility with previous releases is granted (bug fixes or documentation modifications).**>
-		UInt8 versionMicro
+		VersionNumber versionMicro
 	}
 
 	<** @description: command response errors **>
@@ -37,6 +37,6 @@ typeCollection IccCommonTypes {
 		ERR_SEQUENCE_ERROR
 	}
 
-    <** @description:Unique ID for a POI Categories**>
+    <** @description: base type of all parts of the Version**>
     typedef VersionNumber is UInt8
 }

@@ -1,3 +1,4 @@
+{% import 'macros/doxygen.tpl' as doxygen %}
 #pragma once
 // Generated from Franca IDL Interface {{ fqn }}
 // {{ timestamp }}
@@ -26,6 +27,8 @@ class {{ name }}
     {% for m in item.methods.values() %}
     // functions for {{ m.name }}
     // Commands
+
+    {{ doxygen.add_function_comment(m, in_args=m.in_args) -}}
     {% set maybecomma = joiner(",") %}
     void {{ m.name }}_command_serialize (
                         const UInt16& act{{ maybecomma() }}
@@ -33,6 +36,8 @@ class {{ name }}
                           {{ maybecomma() }}const {{ render_type(p) }}& {{ p.name }}{% endfor %}
                         , buffer &message_buffer
                       );
+
+    {{ doxygen.add_function_comment(m, out_args=m.in_args, return="bool deserialize was OK") -}}
     {% set maybecomma = joiner(",") %}
     bool {{ m.name }}_command_deserialize (
                         const buffer &message_buffer,
@@ -42,6 +47,8 @@ class {{ name }}
                       );
 
     // Responses
+
+    {{ doxygen.add_function_comment(m, in_args=m.out_args) -}}
     {% set maybecomma = joiner(",") %}
     void {{ m.name }}_response_serialize (
                            const UInt16 &act{{ maybecomma() }}
@@ -49,6 +56,8 @@ class {{ name }}
                               {{ maybecomma() }} const {{ render_type(p)}} &{{ p.name }}{% endfor %}
                            , buffer &message_buffer
                       );
+
+    {{ doxygen.add_function_comment(m, out_args=m.out_args, return="bool deserialize was OK") -}}
     {% set maybecomma = joiner(",") %}
     bool {{ m.name }}_response_deserialize (
                            const buffer &message_buffer,
@@ -64,6 +73,8 @@ class {{ name }}
     // ####################
     {% for m in item.broadcasts.values() %}
     // functions for {{ m.name }}
+
+    {{ doxygen.add_function_comment(m, in_args=m.out_args) -}}
     {% set maybecomma = joiner(",") %}
     void {{ m.name }}_broadcast_serialize (
                         const UInt16& act{{ maybecomma() }}
@@ -71,6 +82,8 @@ class {{ name }}
                           {{ maybecomma() }}const {{ render_type(p) }}& {{ p.name }}{% endfor %}
                         , buffer &message_buffer
                       );
+
+    {{ doxygen.add_function_comment(m, out_args=m.out_args, return="bool deserialize was OK") -}}
     {% set maybecomma = joiner(",") %}
     bool {{ m.name }}_broadcast_deserialize (
                         const buffer &message_buffer,
