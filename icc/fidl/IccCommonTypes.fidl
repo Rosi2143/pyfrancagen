@@ -37,6 +37,21 @@ typeCollection IccCommonTypes {
 		ERR_SEQUENCE_ERROR
 	}
 
-    <** @description: base type of all parts of the Version**>
+    <** @description: base type of all parts of the Version **>
     typedef VersionNumber is UInt8
+
+		<** @description: test a simple union **>
+		union ExampleUnion {
+			UInt32 element1
+			Float element2
+		}
+
+		<** @description: test an extended union **>
+		union ExampleExtendUnion extends ExampleUnion {
+			UInt16 element3
+		}
+
+		<** @description: test a simple constant **>
+		const String foo = "bar"
 }
+
