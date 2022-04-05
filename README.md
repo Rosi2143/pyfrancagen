@@ -7,6 +7,8 @@
   - [docker](#docker-1)
   - [manual](#manual-1)
 - [generate documentation](#generate-documentation)
+  - [Doxygen](#doxygen)
+  - [Franca IDL](#franca-idl)
 - [BUGS](#bugs)
 
 # Franca IDL code generation
@@ -71,6 +73,7 @@ $ ./generate_icc.py
 Check results in **src_gen/**
 
 # generate documentation
+## Doxygen
 Optionally, generate some Docs: (make sure Doxygen is installed)
 ```bash
 $ cd src_gen
@@ -78,6 +81,13 @@ $ doxygen
 $ firefox index.html
 ```
 ** DOCS EXAMPLE CAN BE SEEN HERE ON THE [GITHUB PAGES](https://gunnarx.github.io/pyfrancagen)
+
+## Franca IDL
+Optionally generate documentation using [fidk2adoc](https://github.com/mintoko/fidl2adoc)
+```bash
+$ export PYTHONPATH=./pyfranca
+$ python ./fidl2adoc/fidl2adoc/fidl2adoc.py -i ./icc/fidl/avb_test.fidl -o ./build/avb_test.adoc
+```
 
 # BUGS
 - Boilerplate is generated twice, (only on some file types)

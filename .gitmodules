@@ -7,3 +7,6 @@
 [submodule "pyfranca_cpp"]
 	path = pyfranca_cpp
 	url = git@github.com:Rosi2143/pyfranca_cpp.git
+[submodule "fidl2adoc"]
+	path = fidl2adoc
+	url = git@github.com:mintoko/fidl2adoc.git
