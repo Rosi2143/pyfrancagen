@@ -52,5 +52,7 @@
    },
    "esbonio.server.enabled": false,
    "cmake.sourceDirectory": "${workspaceFolder}/build",
-   "restructuredtext.languageServer.disabled": true
+   "restructuredtext.languageServer.disabled": true,
+   "python.linting.pylintEnabled": true,
+   "python.linting.enabled": true
 }
